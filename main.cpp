@@ -13,6 +13,13 @@ int main() {
   grain* p3 = new grain(1, "grain", 10.76, 100, "wheat", 10);
   fruit* p4 = new fruit(4, "fruit", 15.42, 500, "apple", 5);
 
+  p1->getStatus();
+  p2->getStatus();
+  p3->getStatus();
+  p4->getStatus();
+
+  p1->plantGrow();
+  p2->plantGrow();
   for (int i = 0; i < 110; i++) {
     p3->plantGrow();
     p3->plantWater();
@@ -21,9 +28,6 @@ int main() {
     p4->plantGrow();
     p4->plantWater();
   }
-
-  p3->getStatus();
-  p4->getStatus();
 
   delete p1;
   delete p2;
