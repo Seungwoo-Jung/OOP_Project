@@ -29,6 +29,11 @@ int main() {
     p4->plantWater();
   }
 
+  p1->getStatus();
+  p2->getStatus();
+  p3->getStatus();
+  p4->getStatus();
+
   delete p1;
   delete p2;
   delete p3;

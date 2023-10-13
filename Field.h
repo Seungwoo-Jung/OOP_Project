@@ -3,21 +3,20 @@
 
 #include <string>
 #include <vector>
-//#include "Plant.h"
+// #include "Plant.h"
 
 class Field {
-    private:
-        std::vector<std::vector<Plant>> fieldMatrix;
-        int fieldSizeM;
-        int fieldSizeN;
-        std::string soilState;
+ private:
+  std::vector<std::vector<Plant>> fieldMatrix;
+  int fieldSizeM;
+  int fieldSizeN;
+  std::string soilState;
 
-    public:
-        Field();
-        Field(int size_row, int size_column);
+ public:
+  Field();
+  Field(int size_row, int size_column);
 
-
-        ~Field();
+  ~Field();
 };
 
 #endif
