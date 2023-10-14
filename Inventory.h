@@ -13,14 +13,15 @@ using namespace std;
 
 class Inventory {
  private:
+  bool exists;
   int plantCapacity;
   int equipmentCapacity;
   double funds;
   int grain;
   int fruit;
   bool isOpen;
-  unordered_map<int, Plant> plantInventory;
-  unordered_map<int, Equipment> equipInventory;
+  unordered_map<int, Plant*> plantInventory;
+  unordered_map<int, Equipment*> equipInventory;
 
  public:
   Inventory();
@@ -30,6 +31,8 @@ class Inventory {
   void closeInventory();
   bool inventoryOpen();
 
+  void getContents();
+
   void changeFunds(double amount);
   void changeGrain(int amount);
   void changeFruit(int amount);
@@ -38,10 +41,11 @@ class Inventory {
   int getGrain();
   int getFruit();
 
-  void addPlant(const Plant& p1);
+  void addPlant(Plant* p1);
   void removePlant(int ID);
 
-  void addEquipment(const Equipment& e1);
+  void addEquipment(Equipment* e1);
   void removeEquipment(int ID);
+  ~Inventory();
 };
 #endif

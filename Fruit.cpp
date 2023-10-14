@@ -137,7 +137,7 @@ void Fruit::plantWater() {
 // default fruit amount of -1 is printed as 0
 void Fruit::getStatus() {
   cout << "Plant of type Fruit, species " << name << " with ID " << ID
-       << ".Age is " << age << " out of " << lifespan
+       << ". Age is " << age << " out of " << lifespan
        << " lifespan. Produces 1 fruit per " << productionRate << " days. "
        << "Current status: " << status << ", with growth rate " << growthRate
        << ", " << water << "% water and ";

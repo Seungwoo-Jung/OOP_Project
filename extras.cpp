@@ -1,7 +1,6 @@
 #include <iostream>
 
 void Inventory::openInventory() {
-  cout << "Opening inventory..." << endl;
   ifstream loadFile("inventory.txt");
   loadFile >> currentSize >> maxSize >> plantCapacity >> equipmentCapacity >>
       plantsInHand >> equipmentInHand;
@@ -52,7 +51,6 @@ void Inventory::openInventory() {
 }
 
 void Inventory::closeInventory() {
-  cout << "Closing inventory..." << endl;
   ofstream saveFile("inventory.txt");
   saveFile << currentSize << "\n"
            << maxSize << "\n"

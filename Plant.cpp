@@ -30,4 +30,4 @@ void Plant::plantGrow(int growthRate){};
 int Plant::plantHarvest() { return 0; };
 void Plant::plantWater(){};
 void Plant::getStatus(){};
-Plant::~Plant() { cout << "test" << endl; };
+Plant::~Plant(){};
