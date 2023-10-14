@@ -83,9 +83,28 @@ void scanf_test(){
 	endwin();
 }
 
+void window_test(){
+	initscr();
+
+	WINDOW *win1;
+
+	win1 = newwin(6, 20, 1, 1);
+
+	refresh();
+
+	box(win1, 0, 0);
+
+	wrefresh(win1);
+
+	getch();
+
+	endwin();
+}
+
 int main(){
 
-    scanf_test();
+	// Change this to the desired test function
+    window_test();
 
     return 0;
 }
