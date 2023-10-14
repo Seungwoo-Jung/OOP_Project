@@ -5,7 +5,7 @@
 #include "item.h"
 using namespace std;
 
-class plant : public item {
+class Plant : public Item {
  protected:
   float areaUsed;
   int lifespan;
@@ -14,12 +14,12 @@ class plant : public item {
   double water;
 
  public:
-  plant();
-  plant(int ID, string name, float area, int life, string type);
+  Plant();
+  Plant(int ID, string name, float area, int life, string type);
   virtual void plantGrow();
   virtual int plantHarvest();
   virtual void plantWater();
-  ~plant();
+  ~Plant();
 };
 
 #endif

@@ -4,14 +4,14 @@
 
 using namespace std;
 
-item::item() {
+Item::Item() {
   ID = 0;
   name = "null";
   status = "null";
 }
-item::item(int setID, string setname, string setstatus) {
+Item::Item(int setID, string setname, string setstatus) {
   ID = setID;
   name = setname;
   status = setstatus;
 }
-item::~item() {}
+Item::~Item() {}

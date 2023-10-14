@@ -4,17 +4,17 @@
 
 using namespace std;
 
-class item {
+class Item {
  protected:
   int ID;
   string name;
   string status;
 
  public:
-  item();
-  item(int setID, string setname, string setstatus);
+  Item();
+  Item(int setID, string setname, string setstatus);
   virtual void getStatus() = 0;
-  ~item();
+  ~Item();
 };
 
 #endif

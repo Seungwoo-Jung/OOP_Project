@@ -6,14 +6,14 @@
 #include "plant.h"
 using namespace std;
 
-grain::grain() : plant() { yield = 0; }
-grain::grain(int ID, string name, float area, int life, string type,
+Grain::Grain() : Plant() { yield = 0; }
+Grain::Grain(int ID, string name, float area, int life, string type,
              int setyield)
-    : plant(ID, name, area, life, type) {
+    : Plant(ID, name, area, life, type) {
   yield = setyield;
 }
-grain::~grain() { cout << "grain with ID " << ID << " was deleted" << endl; }
-void grain::plantGrow() {
+Grain::~Grain() { cout << "grain with ID " << ID << " was deleted" << endl; }
+void Grain::plantGrow() {
   if (status != "null" && status != "dead") {
     if (age < lifespan && water > 0) {
       age = age + 1;
@@ -35,15 +35,15 @@ void grain::plantGrow() {
     }
   }
 }
-int grain::plantHarvest() {
+int Grain::plantHarvest() {
   if (status != "dead") {
     status = "dead";
     return yield;
   }
   return 0;
 };
-void grain::plantWater() { water = 100; };
-void grain::getStatus() {
+void Grain::plantWater() { water = 100; };
+void Grain::getStatus() {
   cout << "Plant of type " << species << " with ID " << ID << ". name " << name
        << ", using " << areaUsed << " area. Age is " << age << " out of "
        << lifespan << " lifespan. Yield is " << yield << "."

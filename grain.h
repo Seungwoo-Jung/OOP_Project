@@ -6,14 +6,14 @@
 #include "plant.h"
 using namespace std;
 
-class grain : public plant {
+class Grain : public Plant {
  private:
   int yield;
 
  public:
-  grain();
-  grain(int ID, string name, float area, int life, string type, int setyield);
-  ~grain();
+  Grain();
+  Grain(int ID, string name, float area, int life, string type, int setyield);
+  ~Grain();
   void plantGrow() override;
   int plantHarvest() override;
   void plantWater() override;

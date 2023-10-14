@@ -6,15 +6,15 @@
 #include "plant.h"
 using namespace std;
 
-class fruit : public plant {
+class Fruit : public Plant {
  private:
   int productionRate;
   int currentFruit;
 
  public:
-  fruit();
-  fruit(int ID, string name, float area, int life, string type, int setRate);
-  ~fruit();
+  Fruit();
+  Fruit(int ID, string name, float area, int life, string type, int setRate);
+  ~Fruit();
   void plantGrow() override;
   int plantHarvest() override;
   void plantWater() override;

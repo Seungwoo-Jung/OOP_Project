@@ -6,15 +6,15 @@
 #include "plant.h"
 using namespace std;
 
-fruit::fruit() : plant() { productionRate = 0; }
-fruit::fruit(int ID, string name, float area, int life, string type,
+Fruit::Fruit() : Plant() { productionRate = 0; }
+Fruit::Fruit(int ID, string name, float area, int life, string type,
              int setRate)
-    : plant(ID, name, area, life, type) {
+    : Plant(ID, name, area, life, type) {
   productionRate = setRate;
   currentFruit = 0;
 }
-fruit::~fruit() { cout << "fruit with ID " << ID << " was deleted" << endl; }
-void fruit::plantGrow() {
+Fruit::~Fruit() { cout << "fruit with ID " << ID << " was deleted" << endl; }
+void Fruit::plantGrow() {
   if (status != "null" && status != "dead") {
     if (status == "growing" && age < lifespan && water > 0) {
       age = age + 1;
@@ -40,7 +40,7 @@ void fruit::plantGrow() {
     }
   }
 }
-int fruit::plantHarvest() {
+int Fruit::plantHarvest() {
   if (status != "dead") {
     int yield = currentFruit;
     currentFruit = 0;
@@ -48,8 +48,8 @@ int fruit::plantHarvest() {
   }
   return 0;
 };
-void fruit::plantWater() { water = 100; };
-void fruit::getStatus() {
+void Fruit::plantWater() { water = 100; };
+void Fruit::getStatus() {
   cout << "Plant of type " << species << " with ID " << ID << ". name " << name
        << ", using " << areaUsed << " area. Age is " << age << " out of "
        << lifespan << " lifespan. Produces 1 fruit per " << productionRate
