@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-#include "plant.h"
+#include "Plant.h"
 using namespace std;
 
 class Grain : public Plant {
@@ -12,9 +12,9 @@ class Grain : public Plant {
 
  public:
   Grain();
-  Grain(int ID, string name, float area, int life, string type, int setyield);
+  Grain(int ID, string name, int life, string type, int setyield);
   ~Grain();
-  void plantGrow() override;
+  void plantGrow(int growthRate) override;
   int plantHarvest() override;
   void plantWater() override;
   void getStatus() override;

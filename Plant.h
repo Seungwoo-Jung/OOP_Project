@@ -2,21 +2,20 @@
 #define PLANT_H
 #include <string>
 
-#include "item.h"
+#include "Item.h"
 using namespace std;
 
 class Plant : public Item {
  protected:
-  float areaUsed;
-  int lifespan;
   string species;
-  int age;
+  double age;
   double water;
+  int growthRate;
 
  public:
   Plant();
-  Plant(int ID, string name, float area, int life, string type);
-  virtual void plantGrow();
+  Plant(int ID, string name, int life, string type);
+  virtual void plantGrow(int growthRate);
   virtual int plantHarvest();
   virtual void plantWater();
   ~Plant();

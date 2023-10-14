@@ -1,36 +1,58 @@
 #include <iostream>
 #include <string>
 
-#include "fruit.h"
-#include "grain.h"
-#include "item.h"
-#include "plant.h"
+#include "Fruit.h"
+#include "Grain.h"
+#include "Item.h"
+#include "Plant.h"
 using namespace std;
 
 int main() {
-  grain* p1 = new grain();
-  fruit* p2 = new fruit();
-  grain* p3 = new grain(1, "grain", 10.76, 100, "wheat", 10);
-  fruit* p4 = new fruit(4, "fruit", 15.42, 500, "apple", 5);
+  Grain* p1 = new Grain();
+  Fruit* p2 = new Fruit();
+  Grain* p3 = new Grain(1, "grain", 100, "wheat", 10);
+  Fruit* p4 = new Fruit(4, "fruit", 500, "apple", 5);
 
-  p1->getStatus();
-  p2->getStatus();
   p3->getStatus();
   p4->getStatus();
 
-  p1->plantGrow();
-  p2->plantGrow();
-  for (int i = 0; i < 110; i++) {
-    p3->plantGrow();
-    p3->plantWater();
-  }
-  for (int i = 0; i < 110; i++) {
-    p4->plantGrow();
-    p4->plantWater();
+  p1->plantGrow(1);
+  p2->plantGrow(3);
+
+  for (int i = 0; i < 19; i++) {
+    p3->plantGrow(2);
   }
 
-  p1->getStatus();
-  p2->getStatus();
+  for (int i = 0; i < 19; i++) {
+    p4->plantGrow(2);
+  }
+
+  p3->plantWater();
+  p4->plantWater();
+
+  for (int i = 0; i < 19; i++) {
+    p3->plantGrow(2);
+  }
+
+  for (int i = 0; i < 200; i++) {
+    p4->plantGrow(2);
+    p4->plantWater();
+  }
+  for (int i = 0; i < 19; i++) {
+    p4->plantGrow(2);
+  }
+
+  p3->plantWater();
+  p4->plantWater();
+
+  p3->getStatus();
+  p4->getStatus();
+
+  int fruitharvest = p4->plantHarvest();
+  int grainyield = p3->plantHarvest();
+
+  cout << fruitharvest << " " << grainyield << endl;
+
   p3->getStatus();
   p4->getStatus();
 
@@ -38,5 +60,6 @@ int main() {
   delete p2;
   delete p3;
   delete p4;
+
   return 0;
 }

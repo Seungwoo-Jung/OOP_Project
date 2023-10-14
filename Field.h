@@ -7,7 +7,7 @@
 
 class Field {
  private:
-  std::vector<std::vector<plant>> fieldMatrix;
+  std::vector<std::vector<Plant>> fieldMatrix;
   int fieldSizeM;
   int fieldSizeN;
   std::string soilState;

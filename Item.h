@@ -9,10 +9,13 @@ class Item {
   int ID;
   string name;
   string status;
+  int lifespan;
 
  public:
   Item();
-  Item(int setID, string setname, string setstatus);
+  Item(int setID, string setname, string setstatus, int lifespan);
+
+  // function set as 0 to make class abstract
   virtual void getStatus() = 0;
   ~Item();
 };

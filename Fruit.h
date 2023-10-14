@@ -3,19 +3,20 @@
 #include <iostream>
 #include <string>
 
-#include "plant.h"
+#include "Plant.h"
 using namespace std;
 
 class Fruit : public Plant {
  private:
   int productionRate;
   int currentFruit;
+  int productionTracker;
 
  public:
   Fruit();
-  Fruit(int ID, string name, float area, int life, string type, int setRate);
+  Fruit(int ID, string name, int life, string type, int setRate);
   ~Fruit();
-  void plantGrow() override;
+  void plantGrow(int growthRate) override;
   int plantHarvest() override;
   void plantWater() override;
   void getStatus() override;
