@@ -11,18 +11,10 @@ class item {
   string status;
 
  public:
-  item() {
-    ID = 0;
-    name = "null";
-    status = "null";
-  }
-  item(int setID, string setname, string setstatus) {
-    ID = setID;
-    name = setname;
-    status = setstatus;
-  }
+  item();
+  item(int setID, string setname, string setstatus);
   virtual void getStatus() = 0;
-  ~item() {}
+  ~item();
 };
 
 #endif
