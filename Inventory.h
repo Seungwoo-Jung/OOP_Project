@@ -2,7 +2,9 @@
 #define INVENTORY_H
 #include <iostream>
 #include <map>
+#include <stack>
 #include <string>
+#include <unordered_map>
 
 #include "Equipment.h"
 #include "Plant.h"
@@ -11,19 +13,18 @@ using namespace std;
 
 class Inventory {
  private:
-  int currentSize;
-  int maxSize;
   int plantCapacity;
   int equipmentCapacity;
   double funds;
   int grain;
   int fruit;
   bool isOpen;
-  Plant** plantsInHand;
-  Equipment** equipmentInHand;
+  unordered_map<int, Plant> plantInventory;
+  unordered_map<int, Equipment> equipInventory;
 
  public:
   Inventory();
+  Inventory(int p, int e);
 
   void openInventory();
   void closeInventory();
@@ -33,10 +34,14 @@ class Inventory {
   void changeGrain(int amount);
   void changeFruit(int amount);
 
-  void addPlant();
-  void addEquipment();
+  double getFunds();
+  int getGrain();
+  int getFruit();
 
-  void removePlant();
-  void removeEquipment();
+  void addPlant(const Plant& p1);
+  void removePlant(int ID);
+
+  void addEquipment(const Equipment& e1);
+  void removeEquipment(int ID);
 };
 #endif

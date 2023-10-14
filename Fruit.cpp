@@ -19,8 +19,8 @@ Fruit::Fruit() : Plant() {
 // constructor, while setting the production rate via the input value, and
 // currentfruit/production tracker are set at -1 for the purposes of
 // calculations
-Fruit::Fruit(int ID, string name, int life, string type, int setRate)
-    : Plant(ID, name, life, type) {
+Fruit::Fruit(int ID, string name, int life, int setRate)
+    : Plant(ID, name, life) {
   productionRate = setRate;
   currentFruit = -1;
   productionTracker = -1;
@@ -136,8 +136,8 @@ void Fruit::plantWater() {
 // which are important, with explanations. To avoid unreasoable output, the
 // default fruit amount of -1 is printed as 0
 void Fruit::getStatus() {
-  cout << "Plant of type " << species << " with ID " << ID << ". name " << name
-       << ". Age is " << age << " out of " << lifespan
+  cout << "Plant of type Fruit, species " << name << " with ID " << ID
+       << ".Age is " << age << " out of " << lifespan
        << " lifespan. Produces 1 fruit per " << productionRate << " days. "
        << "Current status: " << status << ", with growth rate " << growthRate
        << ", " << water << "% water and ";

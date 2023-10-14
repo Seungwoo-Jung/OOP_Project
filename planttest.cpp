@@ -10,8 +10,8 @@ using namespace std;
 int main() {
   Grain* p1 = new Grain();
   Fruit* p2 = new Fruit();
-  Grain* p3 = new Grain(1, "grain", 100, "wheat", 10);
-  Fruit* p4 = new Fruit(4, "fruit", 500, "apple", 5);
+  Grain* p3 = new Grain(1, "wheat", 100, 10);
+  Fruit* p4 = new Fruit(4, "apple", 500, 5);
 
   p3->getStatus();
   p4->getStatus();
