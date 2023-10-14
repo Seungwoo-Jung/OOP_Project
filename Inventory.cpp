@@ -1,93 +1,40 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <fstream>
 #include "Inventory.h"
+
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+
+#include "Equipment.h"
+#include "Plant.h"
 
 using namespace std;
 
-void Inventory::openInventory() {
+Inventory::Inventory() {
+  currentSize = 0;
+  maxSize = 14;
+  plantCapacity = 10;
+  equipmentCapacity = 4;
+  funds = 0;
+  grain = 0;
+  fruit = 0;
+  isOpen = false;
+  plantsInHand = new Plant*[plantCapacity];
+  equipmentInHand = new Equipment*[equipmentCapacity];
 
-    cout << "Opening inventory..." << endl;
-    ifstream loadFile("inventory.txt");
-    loadFile >> currentSize >> maxSize >> plantCapacity >> equipmentCapacity >> plantsInHand >> equipmentInHand; 
-    loadFile.close();
-    for (int i = 0; i < plantCapacity; i++) {
-        cout << "- Plant specie: " << plantsInHand[i]->species << ", quantity: " << plantsInHand->amount << " / ";
-    }
-    cout << endl;
-
-    for (int i = 0; i < equipmentCapacity; i++) {
-        cout << "- Equipment: " << equipmentInHand[i]->name << ", effects: " << equipmentInHand->getStatus() << " / ";
-    }
-    cout << endl;
-
-    int condition;
-    while (condition != 1) {
-        char input;
-        cout << "What do you want to do? (C:close inventory/ r: remove items)" << endl;
-        cin >> &input;
-
-        if (input == 'C' || input == 'c') {
-            closeInventory();
-            condition = 1;
-        }
-        else if (input == 'r' || input == 'R') {
-            int cond;
-            while (cond != 1) {
-                char second;
-                cout << "What do you want to remove? (E: Equipment / o: others)" << endl;
-                cin >> &second;
-                if (second == 'o' || second == 'O') {
-                    removeItem();
-                    cond = 1;
-                }
-                else if (second == 'E' || second == 'e')
-                {
-                    removeEquipment();
-                    cond = 1;
-                }
-                else
-                {
-                    cout << "wrong input please enter again: " << endl;
-                    continue;
-                }
-            }
-            condition = 1;
-        }
-    }
+  equipmentInHand[0] = new Equipment(01, "shovel", 25, 1);
 }
 
-void Inventory::closeInventory() {
+void Inventory::openInventory() { isOpen = true; }
+void Inventory::closeInventory() { isOpen = false; }
+bool Inventory::inventoryOpen() { return isOpen; }
 
-    cout << "Closing inventory..." << endl;
-    ofstream saveFile("inventory.txt");
-    saveFile << currentSize << "\n" << maxSize << "\n" << plantCapacity << "\n" << equipmentCapacity << "\n" << plantsInHand << "\n" << equipmentInHand; 
-    saveFile.close();
+void Inventory::changeFunds(double amount) { funds = (funds + amount); }
+void Inventory::changeGrain(int amount) { grain = (grain + amount); }
+void Inventory::changeFruit(int amount) { fruit = (fruit + amount); }
 
-}
+void Inventory::addPlant() {}
+void Inventory::addEquipment() {}
 
-void Inventory::addPlant() {
-
-    int counter = 0;
-    while (plantsInHand[counter] != "null") {
-        
-    }
-        if ()
-            plantsInHand
-
-}
-
-void Inventory::addEquipment() {
-
-}
-
-
-void Inventory::removeItem() {  
-
-}  
-
-void Inventory::removeEquipment() {  
-
-} 
-
+void Inventory::removePlant() {}
+void Inventory::removeEquipment() {}
