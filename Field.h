@@ -20,6 +20,7 @@ class Field {
 		void fruitPlant();
 
 		void set_plant(Plant *plant, int row, int column);
+		void remove_plant(int row, int column);
 
 		int get_sizeM();
 		int get_sizeN();

@@ -20,8 +20,21 @@ Field::Field(int size_row, int size_column) {
 	}
 }
 
+void Field::grainPlant(){
+
+}
+
+void Field::fruitPlant(){
+
+}
+
 void Field::set_plant(Plant *plant, int row, int column){
 	fieldMatrix[row][column] = plant;
+}
+
+void Field::remove_plant(int row, int column){
+	//fieldMatrix[row].erase(fieldMatrix[row].begin() + column);
+	fieldMatrix[row][column] = 0;
 }
 
 int Field::get_sizeM(){
