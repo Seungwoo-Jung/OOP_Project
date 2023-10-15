@@ -1,28 +1,47 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 #include <iostream>
-#include <string>
 #include <map>
+#include <stack>
+#include <string>
+#include <unordered_map>
+
+#include "Equipment.h"
 #include "Plant.h"
 
 using namespace std;
 
 class Inventory {
-    private:
-        int currentSize;
-        int maxSize;
-        int plantCapacity;
-        int equipmentCapacity;
-        plant* *plantsInHand = new plant*[plantCapacity];
-        Equipment equipmentInHand;
+ private:
+  int plantCapacity;
+  int equipmentCapacity;
+  double funds;
+  int grain;
+  int fruit;
+  bool isOpen;
+  unordered_map<int, Plant> plantInventory;
+  unordered_map<int, Equipment> equipInventory;
 
-    public:
-        void openInventory();
-        void closeInventory();
-        void addPlant();
-        void addEquipment();
-        void moveItem();
-        void removeItem();
-        void removeEquipment();
+ public:
+  Inventory();
+  Inventory(int p, int e);
+
+  void openInventory();
+  void closeInventory();
+  bool inventoryOpen();
+
+  void changeFunds(double amount);
+  void changeGrain(int amount);
+  void changeFruit(int amount);
+
+  double getFunds();
+  int getGrain();
+  int getFruit();
+
+  void addPlant(const Plant& p1);
+  void removePlant(int ID);
+
+  void addEquipment(const Equipment& e1);
+  void removeEquipment(int ID);
 };
 #endif

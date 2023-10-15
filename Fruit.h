@@ -14,8 +14,8 @@ class Fruit : public Plant {
 
  public:
   Fruit();
-  Fruit(int ID, string name, int life, string type, int setRate);
-  ~Fruit();
+  Fruit(int ID, string name, int life, int setRate);
+  ~Fruit() override;
   void plantGrow(int growthRate) override;
   int plantHarvest() override;
   void plantWater() override;

@@ -20,5 +20,8 @@ Item::Item(int setID, string setname, string setstatus, int life) {
   lifespan = life;
 }
 
+// returns the id of the item for reference
+int Item::getID() const { return ID; }
+
 // empty destructor
 Item::~Item() {}

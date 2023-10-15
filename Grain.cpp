@@ -12,8 +12,8 @@ Grain::Grain() : Plant() { yield = 0; }
 
 // the standard contructor takes input values and feeds some to the plant
 // constructor, while setting the yield as the input value
-Grain::Grain(int ID, string name, int life, string type, int setyield)
-    : Plant(ID, name, life, type) {
+Grain::Grain(int ID, string name, int life, int setyield)
+    : Plant(ID, name, life) {
   yield = setyield;
 }
 
@@ -82,8 +82,8 @@ int Grain::plantHarvest() {
     if (status != "growing") {
       return yield;
     }
-    return 0;
   }
+  return 0;
 }
 
 // the plantWater function refills the plant water to 100%, provided that the
@@ -104,7 +104,7 @@ void Grain::plantWater() {
 // which are important, with explanations. To avoid unreasoable output, the
 // default fruit amount of -1 is printed as 0
 void Grain::getStatus() {
-  cout << "Plant of type " << species << " with ID " << ID << ". name " << name
+  cout << "Plant of type Grain, species " << name << " with ID " << ID
        << ". Age is " << age << " out of " << lifespan << " lifespan. Yield is "
        << yield << "."
        << " Current status: " << status << ", with growth rate " << growthRate

@@ -7,18 +7,18 @@ using namespace std;
 
 class Plant : public Item {
  protected:
-  string species;
   double age;
   double water;
   int growthRate;
 
  public:
   Plant();
-  Plant(int ID, string name, int life, string type);
+  Plant(int ID, string name, int life);
   virtual void plantGrow(int growthRate);
   virtual int plantHarvest();
   virtual void plantWater();
-  ~Plant();
+  virtual void getStatus();
+  virtual ~Plant();
 };
 
 #endif
