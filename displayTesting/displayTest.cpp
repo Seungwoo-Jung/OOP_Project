@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <string>
+#include <iostream>
 
 // printw(string);        			/* Print on stdscr at present cursor position */
 // mvprintw(y, x, string);			/* Move to (y, x) then print string */
@@ -104,7 +105,23 @@ void window_test(){
 int main(){
 
 	// Change this to the desired test function
-    window_test();
+    //window_test();
 
-    return 0;
+	initscr();
+
+	char ch;
+
+	while (ch != 't'){
+		ch = getch();
+		if (ch == 'p'){
+			endwin();
+			std::cout << "the program exited in while loop" << std::endl;
+			return 0;
+		}
+	}
+
+	endwin();
+
+	std::cout << "the program exited out of while loop" << std::endl;
+	return 0;
 }
