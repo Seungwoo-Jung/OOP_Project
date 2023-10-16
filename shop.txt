@@ -1,0 +1,4 @@
+axe
+100
+pickaxe
+150

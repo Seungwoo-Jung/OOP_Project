@@ -2,7 +2,9 @@
 #define PLAYER_H
 #include <iostream>
 #include <string>
+#include <vector>
 #include <map>
+#include "Item.h"
 
 using namespace std;
 
@@ -11,8 +13,9 @@ class Player {
         int userID;
         int Currency;
         map<string, int> inventory;
+
     public:
-        Player();
+        Player(int initialMoney);
         void loadData();
         void saveData();
         ~Player();

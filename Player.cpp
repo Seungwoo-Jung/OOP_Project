@@ -5,10 +5,7 @@
 
 using namespace std;
 
-Player::Player() {
-    cout << "Enter numbers to create your userID: " << endl;
-    cin >> userID;
-}
+Player::Player(int initialMoney) : Currency(initialMoney) {};
 
 void Player::loadData() {
     ifstream loadFile("player.txt");
@@ -23,5 +20,5 @@ void Player::saveData() {
 }
 
 Player::~Player() {
-
+    
 }
