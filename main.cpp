@@ -1,7 +1,3 @@
-#include <ncurses.h>
-
-#include <iostream>
-
 #include "Equipment.h"
 #include "Field.h"
 #include "Fruit.h"
@@ -99,6 +95,6 @@ int main() {
         gameRunning = false;
     }
 
-  endwin();
-  return 0;
+    endwin();
+    return 0;
 }
