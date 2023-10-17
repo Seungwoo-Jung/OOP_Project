@@ -98,5 +98,4 @@ class Shop {
   void closeShop();
   ~Shop();
 };
-
 #endif
