@@ -14,7 +14,7 @@ class Equipment : public Item {
 
  public:
   Equipment();
-  Equipment(int ID, string name, int lifespan, int effect, double setPrice);
+  Equipment(int ID, string name, int lifespan, int effect);
   ~Equipment();
   void getStatus() override;
   bool itemEquipped();

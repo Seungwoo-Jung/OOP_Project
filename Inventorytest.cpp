@@ -121,8 +121,8 @@ int main() {
           "equipment item"
        << endl
        << endl;
-  inv->addPlant(new Fruit(10, "Apple", 100, 3, 6.3));
-  inv->addEquipment(new Equipment(11, "Hoe", 50, 2, 9.5));
+  inv->addPlant(new Fruit(10, "Apple", 100, 3));
+  inv->addEquipment(new Equipment(11, "Hoe", 50, 2));
 
   // testing removing a plant and equipment item:
   cout
@@ -160,10 +160,10 @@ int main() {
   // loop for adding objects fast. High loop values are used so as to not
   // conflict with existing ids. Grain is used to ensure both subclasses work
   for (int i = 50; i < 54; i++) {
-    inv->addPlant(new Grain(i, "Rice", 30, 1, 4.8));
+    inv->addPlant(new Grain(i, "Rice", 30, 1));
   }
   for (int i = 60; i < 64; i++) {
-    inv->addEquipment(new Equipment(i, "Pick", 40, 3, 1.6));
+    inv->addEquipment(new Equipment(i, "Pick", 40, 3));
   }
 
   // testing closing the Inventory

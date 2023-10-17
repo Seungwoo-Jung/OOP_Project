@@ -12,10 +12,9 @@ Grain::Grain() : Plant() { yield = 0; }
 
 // the standard contructor takes input values and feeds some to the plant
 // constructor, while setting the yield as the input value
-Grain::Grain(int ID, string name, int life, int setyield, double setPrice)
-    : Plant(ID, name, life, setPrice) {
+Grain::Grain(int ID, string name, int life, int setyield)
+    : Plant(ID, name, life) {
   yield = setyield;
-  price = setPrice;
 }
 
 // the destructor prints out a message detailing the deletion

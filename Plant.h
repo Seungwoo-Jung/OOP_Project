@@ -14,7 +14,7 @@ class Plant : public Item {
 
  public:
   Plant();
-  Plant(int ID, string name, int life, double setPrice);
+  Plant(int ID, string name, int life);
   virtual void plantGrow(int growthRate);
   virtual int plantHarvest();
   virtual void plantWater();

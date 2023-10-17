@@ -20,6 +20,11 @@ class Inventory {
   int grain;
   int fruit;
   bool isOpen;
+  bool plantFull;
+  bool equipFull;
+
+  bool plantEmpty;
+  bool equipEmpty;
   unordered_map<int, Plant*> plantInventory;
   unordered_map<int, Equipment*> equipInventory;
 
@@ -32,6 +37,8 @@ class Inventory {
   bool inventoryOpen();
 
   void getContents();
+  bool pFull();
+  bool eFull();
 
   void changeFunds(double amount);
   void changeGrain(int amount);

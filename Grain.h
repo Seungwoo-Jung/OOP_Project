@@ -13,7 +13,7 @@ class Grain : public Plant {
 
  public:
   Grain();
-  Grain(int ID, string name, int life, int setyield, double setPrice);
+  Grain(int ID, string name, int life, int setyield);
   ~Grain() override;
   void plantGrow(int growthRate) override;
   int plantHarvest() override;

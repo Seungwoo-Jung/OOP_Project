@@ -21,6 +21,10 @@ Inventory::Inventory() {
   fruit = 0;
   isOpen = false;
   exists = false;
+  plantFull = false;
+  equipFull = false;
+  plantEmpty = true;
+  equipEmpty = true;
 }
 
 // standard constructor takes 2 inputs and sets the amount of plants/equipment
@@ -33,12 +37,16 @@ Inventory::Inventory(int p, int e) {
   funds = 0;
   grain = 0;
   fruit = 0;
+  plantFull = false;
+  equipFull = false;
+  plantEmpty = true;
+  equipEmpty = true;
   isOpen = true;
 
-  addPlant(new Fruit(1, "Apple", 50, 2, 5));
-  addPlant(new Grain(2, "Wheat", 20, 10, 2));
-  addPlant(new Grain(3, "Rice", 20, 15, 2));
-  addEquipment(new Equipment(4, "shovel", 50, 1, 50));
+  addPlant(new Fruit(1, "Apple", 50, 2));
+  addPlant(new Grain(2, "Wheat", 20, 10));
+  addPlant(new Grain(3, "Rice", 20, 15));
+  addEquipment(new Equipment(4, "shovel", 50, 1));
 
   isOpen = false;
 }
@@ -148,6 +156,10 @@ void Inventory::changeFruit(int amount) {
   }
 }
 
+// checks if either plant or equipment is full and returns the value.
+bool Inventory::pFull() { return plantFull; }
+bool Inventory::eFull() { return equipFull; }
+
 // These 3 functions return the current funds, grain and fruit respectively
 double Inventory::getFunds() {
   if (exists == true) {
@@ -174,28 +186,31 @@ int Inventory::getFruit() {
 }
 
 // the addPlant function uses an unordered map and an id to add a plant to the
-// inventory, so long as there is space. Will only work if inventory is open and
-// exists
+// inventory, so long as there is space. Will only work if inventory exists
 void Inventory::addPlant(Plant* p1) {
-  if (isOpen == true && exists == true) {
+  if (exists == true) {
     if (plantInventory.size() < plantCapacity) {
       plantInventory[p1->getID()] = p1;
       cout << "Plant with id " << p1->getID() << " was added" << endl;
     } else {
       cout << "Unable to add more Plants - Inventory full" << endl;
     }
-  } else if (isOpen == false && exists == true) {
-    cout << "Unable, Inventory not open" << endl;
   } else {
     cout << "Unable, Inventory does not exist" << endl;
+  }
+  if (plantInventory.size() > 0) {
+    plantEmpty = false;
+  }
+  if (plantInventory.size() == plantCapacity) {
+    plantFull = true;
   }
 }
 
 // the removePlant function uses an auto tracker value wth a map and an id
 // to remove a plant from the inventory, if it exists there. Will only work if
-// inventory is open and exists
+// inventory exists
 void Inventory::removePlant(int plantID) {
-  if (isOpen == true && exists == true) {
+  if (exists == true) {
     auto it = plantInventory.find(plantID);
     if (it != plantInventory.end()) {
       plantInventory.erase(it);
@@ -203,36 +218,43 @@ void Inventory::removePlant(int plantID) {
     } else {
       cout << "Unable to remove Plant - Item not in inventory" << endl;
     }
-  } else if (isOpen == false && exists == true) {
-    cout << "Unable, Inventory not open" << endl;
   } else {
     cout << "Unable, Inventory does not exist" << endl;
+  }
+  if (plantInventory.size() < plantCapacity) {
+    plantFull = false;
+  }
+  if (plantInventory.size() == 0) {
+    plantEmpty = true;
   }
 }
 
 // the addEquipment function uses an unordered map and an id to add Equipment to
-// the inventory, so long as there is space. Will only work if inventory is open
-// and exists
+// the inventory, so long as there is space. Will only work if inventory exists
 void Inventory::addEquipment(Equipment* e1) {
-  if (isOpen == true && exists == true) {
+  if (exists == true) {
     if (equipInventory.size() < equipmentCapacity) {
       equipInventory[e1->getID()] = e1;
       cout << "Equipment with id " << e1->getID() << " was added" << endl;
     } else {
       cout << "Unable to add more Equipment - Inventory full" << endl;
     }
-  } else if (isOpen == false && exists == true) {
-    cout << "Unable, Inventory not open" << endl;
   } else {
     cout << "Unable, Inventory does not exist" << endl;
+  }
+  if (equipInventory.size() > 0) {
+    equipEmpty = false;
+  }
+  if (equipInventory.size() == equipmentCapacity) {
+    equipFull = true;
   }
 }
 
 // the removeEquipment function uses an auto tracker value wth a map and an id
 // to remove Equipment fromthe inventory, if it exists there. Will only work if
-// inventory is open and exists
+// inventory exists
 void Inventory::removeEquipment(int EquipmentID) {
-  if (isOpen == true && exists == true) {
+  if (exists == true) {
     auto it = equipInventory.find(EquipmentID);
     if (it != equipInventory.end()) {
       equipInventory.erase(it);
@@ -240,10 +262,14 @@ void Inventory::removeEquipment(int EquipmentID) {
     } else {
       cout << "Unable to remove Equipment - Item not in inventory" << endl;
     }
-  } else if (isOpen == false && exists == true) {
-    cout << "Unable, Inventory not open" << endl;
   } else {
     cout << "Unable, Inventory does not exist" << endl;
+  }
+  if (equipInventory.size() == equipmentCapacity) {
+    equipFull = false;
+  }
+  if (equipInventory.size() == 0) {
+    equipEmpty = true;
   }
 }
 
