@@ -13,17 +13,19 @@ Fruit::Fruit() : Plant() {
   productionRate = 0;
   currentFruit = 0;
   productionTracker = 0;
+  price = 0;
 }
 
 // the standard contructor takes input values and feeds some to the plant
 // constructor, while setting the production rate via the input value, and
 // currentfruit/production tracker are set at -1 for the purposes of
 // calculations
-Fruit::Fruit(int ID, string name, int life, int setRate)
-    : Plant(ID, name, life) {
+Fruit::Fruit(int ID, string name, int life, int setRate, int setPrice)
+    : Plant(ID, name, life, price) {
   productionRate = setRate;
   currentFruit = -1;
   productionTracker = -1;
+  price = setPrice;
 }
 
 // the destructor prints out a message detailing the deletion
