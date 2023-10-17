@@ -16,7 +16,7 @@ class Inventory {
   bool exists;
   int plantCapacity;
   int equipmentCapacity;
-  double funds;
+  int funds;
   int wheat;
   int rye;
   int apple;
@@ -48,7 +48,7 @@ class Inventory {
   bool pEmpty();
   bool eEmpty();
 
-  void changeFunds(double amount);
+  void changeFunds(int amount);
   void changeWheat(int amount);
   void changeRye(int amount);
   void changeRice(int amount);
@@ -56,7 +56,7 @@ class Inventory {
   void changeApple(int amount);
   void changeBanana(int amount);
 
-  double getFunds();
+  int getFunds();
   int getWheat();
   int getRye();
   int getRice();

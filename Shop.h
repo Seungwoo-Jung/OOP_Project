@@ -6,6 +6,8 @@
 #include <vector>
 
 #include "Equipment.h"
+#include "Fruit.h"
+#include "Grain.h"
 #include "Inventory.h"
 #include "Item.h"
 #include "Plant.h"
