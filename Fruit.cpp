@@ -21,7 +21,7 @@ Fruit::Fruit() : Plant() {
 // currentfruit/production tracker are set at -1 for the purposes of
 // calculations
 Fruit::Fruit(int ID, string name, int life, int setRate, int setPrice)
-    : Plant(ID, name, life, price) {
+    : Plant(ID, name, life, setPrice) {
   productionRate = setRate;
   currentFruit = -1;
   productionTracker = -1;
