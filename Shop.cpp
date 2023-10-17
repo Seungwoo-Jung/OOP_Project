@@ -12,11 +12,22 @@
 
 using namespace std;
 
-// contructor, sets the ID used variable as 0, open as false, and exists as true
+// contructor, sets the ID used variable as 5, open as false, and exists as true
 Shop::Shop() {
-  IDused = 0;
+  IDused = 5;
+  eIDused = 5;
   isOpen = false;
   exists = true;
+  nameList = {"Wheat", "Rice", "Rye", "Apple", "Pear", "Banana"};
+  enameList = {"Hoe", "Shovel", "Fertiliser", "Weeder"};
+  priceList = {15, 20, 25, 50, 75, 100};
+  lifeList = {30, 40, 50, 100, 150, 200};
+  yieldList = {10, 20, 30, 5, 4, 3};
+  effectList = {3, 1, 4, 2};
+  epriceList = {75, 25, 100, 50};
+  elifeList = {40, 50, 20, 30};
+  erevenueList = {37, 12, 50, 25};
+  revenueList = {2, 3, 4, 5, 7, 10};
 }
 
 // buy Plant function buys a plant of a specified type using the ID to identify
@@ -27,28 +38,38 @@ Shop::Shop() {
 // determine the amount which was bought
 void Shop::buyPlant(Inventory &inventory, int amount, int ID) {
   if (exists == true && isOpen == true) {
-    int cost = (priceList[ID] * amount);
+    int cost = priceList[ID];
     string name = nameList[ID];
     int lifespan = lifeList[ID];
     int yield = yieldList[ID];
     int bought = 0;
+    int value = IDused;
 
-    if (inventory.getFunds() >= cost) {
-      for (int i = IDused; i < (IDused + amount); i++) {
+    for (int i = value; i < (value + amount); i++) {
+      if (inventory.getFunds() >= cost) {
         if (inventory.pFull() == false) {
-          inventory.addPlant(new Grain(IDused, name, lifespan, yield));
+          if (name == "Rye" || name == "rye" || name == "Rice" ||
+              name == "rice" || name == "wheat" || name == "Wheat") {
+            inventory.addPlant(new Grain(IDused, name, lifespan, yield));
+          } else if (name == "apple" || name == "Apple" || name == "Pear" ||
+                     name == "pear" || name == "banana" || name == "Banana") {
+            inventory.addPlant(new Fruit(IDused, name, lifespan, yield));
+          }
           IDused = IDused + 1;
           bought = (bought + 1);
           cost = (priceList[ID] * bought);
+          inventory.changeFunds((0 - cost));
         } else {
-          cout << "Unable to buy more items, Inventory Full";
+          cout << "Unable to buy more items, Inventory Full" << endl;
         }
+      } else {
+        cout << "Not enough funds to buy plant." << endl;
       }
-      cout << "You have bought " << bought << " " << name << "for $" << cost
-           << endl;
-    } else {
-      cout << "Not enough funds to buy grain." << endl;
     }
+    cost = (priceList[ID] * bought);
+    cout << "You have bought " << bought << " " << name << " for $" << cost
+         << endl;
+
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
   } else {
@@ -180,8 +201,8 @@ void Shop::buyEquipment(Inventory &inventory, int ID) {
     int effect = effectList[ID];
 
     if (inventory.getFunds() >= cost) {
-      inventory.changeFunds((0 - cost));
       if (inventory.eFull() == false) {
+        inventory.changeFunds((0 - cost));
         inventory.addEquipment(new Equipment(eIDused, name, lifespan, effect));
         cout << "You have bought a " << name << " for $" << cost << endl;
         eIDused = (eIDused + 1);
@@ -230,7 +251,7 @@ void Shop::openShop() {
     isOpen = true;
     cout << "Opening Shop: " << endl;
   } else if (exists == true && isOpen == true) {
-    cout << "Unable, shop already open";
+    cout << "Unable, shop already open" << endl;
   } else {
     cout << "Unable, Shop doesn't exist" << endl;
   }
@@ -248,4 +269,4 @@ void Shop::closeShop() {
 }
 
 // destructor deletes shop with message
-Shop::~Shop() { cout << "Shop was deleted"; }
+Shop::~Shop() { cout << "Shop was deleted" << endl; }

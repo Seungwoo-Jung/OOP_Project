@@ -13,29 +13,29 @@
 #include "Plant.h"
 
 using namespace std;
-typedef vector<string> NameList;
-typedef vector<string> eNameList;
-typedef vector<int> PriceList;
-typedef vector<int> LifeList;
-typedef vector<int> YieldList;
-typedef vector<int> RevenueList;
-typedef vector<int> ePriceList;
-typedef vector<int> eLifeList;
-typedef vector<int> eRevenueList;
-typedef vector<int> EffectList;
-NameList nameList = {"Wheat", "Rice", "Rye", "Apple", "Pear", "Banana"};
-eNameList enameList = {"Hoe", "Shovel", "Fertiliser", "Weeder"};
-PriceList priceList = {15, 20, 25, 50, 75, 100};
-LifeList lifeList = {30, 40, 50, 100, 150, 200};
-YieldList yieldList = {10, 20, 30, 5, 4, 3};
-EffectList effectList = {3, 1, 4, 2};
-ePriceList epriceList = {75, 25, 100, 50};
-eLifeList elifeList = {40, 50, 20, 30};
-eRevenueList erevenueList = {37, 12, 50, 25};
-RevenueList revenueList = {2, 3, 4, 5, 7, 10};
 
 class Shop {
  private:
+  typedef vector<string> NameList;
+  typedef vector<string> eNameList;
+  typedef vector<int> PriceList;
+  typedef vector<int> LifeList;
+  typedef vector<int> YieldList;
+  typedef vector<int> RevenueList;
+  typedef vector<int> ePriceList;
+  typedef vector<int> eLifeList;
+  typedef vector<int> eRevenueList;
+  typedef vector<int> EffectList;
+  NameList nameList;
+  eNameList enameList;
+  PriceList priceList;
+  LifeList lifeList;
+  YieldList yieldList;
+  EffectList effectList;
+  ePriceList epriceList;
+  eLifeList elifeList;
+  eRevenueList erevenueList;
+  RevenueList revenueList;
   int IDused;
   int eIDused;
   bool isOpen;
@@ -89,7 +89,6 @@ class Shop {
       throw runtime_error("Error: Unable to open file " + filename + ".");
     }
   };
-
   void buyPlant(Inventory& inventory, int amount, int ID);
   void sellPlant(Inventory& inventory, int amount, int ID);
 
