@@ -9,6 +9,7 @@
 #include "Shop.h"
 
 #include <ncurses.h>
+#include <menu.h>
 #include <iostream>
 
 WINDOW *dispCreateField(Field field){
@@ -18,11 +19,13 @@ WINDOW *dispCreateField(Field field){
     int windowY = field.get_sizeM() + 2;
     int windowX = (3 * (field.get_sizeN())) + 4;
 
-    windowField = newwin(windowY, windowX, 0, 0);
+    windowField = newwin(windowY, windowX, (getmaxy(stdscr) - windowY) / 2, (getmaxx(stdscr) - windowX) / 2);
 
     refresh();
 
     box(windowField, 0, 0);
+
+    mvwprintw(windowField, 0, 1, "Field");
 
     for (int i = 1; i < windowY - 1; i++){
         for (int j = 1; j < windowX - 1; j++){
@@ -65,6 +68,7 @@ int main(){
 
     initscr();
     noecho();
+    keypad(stdscr, true);
     start_color();
 
     // Defining colours //
@@ -72,21 +76,27 @@ int main(){
     init_pair(2, COLOR_WHITE, COLOR_BLACK);
     init_pair(3, COLOR_GREEN, COLOR_BLACK);
 
-    Field field(5, 6);
-    WINDOW *window;
+    bool gameRunning = true;
 
-    window = dispCreateField(field);
-    mvwin(window, 5, 5);
+    while (gameRunning == true){
 
-    getch();
+        Field field(5, 6);
+        WINDOW *window;
 
-    Grain grain(2, "Wheat", 5, 10, 2);
+        window = dispCreateField(field);
 
-    field.set_plant(&grain, 1, 1);
+        getch();
 
-    dispFieldUpdate(window, field);
+        Grain grain(2, "Wheat", 5, 10, 2);
 
-    getch();
+        field.set_plant(&grain, 1, 1);
+
+        dispFieldUpdate(window, field);
+
+        getch();
+
+        gameRunning = false;
+    }
 
     endwin();
     return 0;
