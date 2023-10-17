@@ -16,7 +16,7 @@ WINDOW *dispCreateField(Field field){
     WINDOW *windowField;
 
     int windowY = field.get_sizeM() + 2;
-    int windowX = (3 * (field.get_sizeN())) + 1;
+    int windowX = (3 * (field.get_sizeN())) + 4;
 
     windowField = newwin(windowY, windowX, 0, 0);
 
@@ -43,8 +43,20 @@ WINDOW *dispCreateField(Field field){
     return windowField;
 }
 
-void dispFieldUpdate(){
+void dispFieldUpdate(WINDOW *window, Field field){
 
+    for (int i = 0; i < field.get_sizeM(); i++){
+        for (int j = 0; j < field.get_sizeN(); j++){
+            if (field.get_plant(i, j) != 0){
+                mvwaddch(window, i + 1, (j + 1) * 3, '#');
+            } else {
+                mvwaddch(window, i + 1, (j + 1) * 3, '=');
+
+            }
+        }
+    }
+
+    wrefresh(window);
 }
 
 int main(){
@@ -60,10 +72,19 @@ int main(){
     init_pair(2, COLOR_WHITE, COLOR_BLACK);
     init_pair(3, COLOR_GREEN, COLOR_BLACK);
 
-    Field field(5, 5);
+    Field field(5, 6);
     WINDOW *window;
 
     window = dispCreateField(field);
+    mvwin(window, 5, 5);
+
+    getch();
+
+    Grain grain(2, "Wheat", 5, 10, 2);
+
+    field.set_plant(&grain, 1, 1);
+
+    dispFieldUpdate(window, field);
 
     getch();
 

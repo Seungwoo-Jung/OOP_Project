@@ -43,8 +43,6 @@
         "new": "cpp",
         "numbers": "cpp",
         "ostream": "cpp",
-<<<<<<< HEAD
-=======
         "vector": "cpp",
         "string": "cpp",
         "array": "cpp",
@@ -86,7 +84,6 @@
         "limits": "cpp",
         "new": "cpp",
         "numbers": "cpp",
->>>>>>> 25f174546402ee47766097f73d4208065f575038
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp"
