@@ -31,7 +31,8 @@ int main(){
     }
     std::cout << std::endl;
 
-
+    std::cout << field.get_sizeM() << std::endl;
+    std::cout << field.get_sizeN() << std::endl;
 
     return 0;
 }
