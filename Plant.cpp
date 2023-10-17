@@ -19,7 +19,8 @@ Plant::Plant() : Item() {
 // default "growing" status.It also sets some default values of age, water and
 // growthRate as either 0, 100 or 1 respectively, and sets the input species
 // value to be that variable value
-Plant::Plant(int ID, string name, int life, int setPrice) : Item(ID, name, "growing", life, setPrice) {
+Plant::Plant(int ID, string name, int life, double setPrice)
+    : Item(ID, name, "growing", life, setPrice) {
   age = 0;
   water = 100;
   growthRate = 1;

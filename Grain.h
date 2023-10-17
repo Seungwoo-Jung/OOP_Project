@@ -2,6 +2,7 @@
 #define GRAIN_H
 #include <iostream>
 #include <string>
+
 #include "Plant.h"
 
 using namespace std;
@@ -9,11 +10,10 @@ using namespace std;
 class Grain : public Plant {
  private:
   int yield;
-  int price;
 
-public:
+ public:
   Grain();
-  Grain(int ID, string name, int life, int setyield, int setPrice);
+  Grain(int ID, string name, int life, int setyield, double setPrice);
   ~Grain() override;
   void plantGrow(int growthRate) override;
   int plantHarvest() override;

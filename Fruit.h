@@ -2,6 +2,7 @@
 #define FRUIT_H
 #include <iostream>
 #include <string>
+
 #include "Plant.h"
 
 using namespace std;
@@ -11,11 +12,10 @@ class Fruit : public Plant {
   int productionRate;
   int currentFruit;
   int productionTracker;
-  int price;
 
-public:
+ public:
   Fruit();
-  Fruit(int ID, string name, int life, int setRate, int setPrice);
+  Fruit(int ID, string name, int life, int setRate, double setPrice);
   ~Fruit() override;
   void plantGrow(int growthRate) override;
   int plantHarvest() override;

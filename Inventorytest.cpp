@@ -121,8 +121,8 @@ int main() {
           "equipment item"
        << endl
        << endl;
-  inv->addPlant(new Fruit(10, "Apple", 100, 3));
-  inv->addEquipment(new Equipment(11, "Hoe", 50, 2));
+  inv->addPlant(new Fruit(10, "Apple", 100, 3, 6.3));
+  inv->addEquipment(new Equipment(11, "Hoe", 50, 2, 9.5));
 
   // testing removing a plant and equipment item:
   cout
@@ -150,8 +150,8 @@ int main() {
   cout << endl
        << endl
        << "expected output: messages detailing the addition of objects until "
-          "both are full, followed by error messages detailing failur3e to add "
-          "more. There should be 1 successful message for Plantsa and 3 "
+          "both are full, followed by error messages detailing failure to add "
+          "more. There should be 1 successful message for Plants and 3 "
           "failures, along with 3 successful messages for Equipment and 1 "
           "failure"
        << endl
@@ -160,10 +160,10 @@ int main() {
   // loop for adding objects fast. High loop values are used so as to not
   // conflict with existing ids. Grain is used to ensure both subclasses work
   for (int i = 50; i < 54; i++) {
-    inv->addPlant(new Grain(i, "Rice", 30, 10));
+    inv->addPlant(new Grain(i, "Rice", 30, 1, 4.8));
   }
   for (int i = 60; i < 64; i++) {
-    inv->addEquipment(new Equipment(i, "Pick", 40, 3));
+    inv->addEquipment(new Equipment(i, "Pick", 40, 3, 1.6));
   }
 
   // testing closing the Inventory

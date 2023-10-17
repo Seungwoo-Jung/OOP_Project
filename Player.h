@@ -1,23 +1,28 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
+
 #include "Item.h"
 
 using namespace std;
 
 class Player {
-    private:
-        int userID;
-        int Currency;
-        map<string, int> inventory;
+ private:
+  int userID;
+  int Currency;
+  bool validInput;
+  int timepassed;
+  map<string, int> inventory;
 
-    public:
-        Player(int initialMoney);
-        void loadData();
-        void saveData();
-        ~Player();
+ public:
+  Player();
+  char Navigate();
+  void loadData();
+  void saveData();
+  void passTime();
+  ~Player();
 };
 #endif
