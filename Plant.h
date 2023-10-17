@@ -1,6 +1,7 @@
 #ifndef PLANT_H
 #define PLANT_H
 #include <string>
+
 #include "Item.h"
 
 using namespace std;
@@ -10,11 +11,10 @@ class Plant : public Item {
   double age;
   double water;
   int growthRate;
-  int price;
 
-public:
+ public:
   Plant();
-  Plant(int ID, string name, int life, int setPrice);
+  Plant(int ID, string name, int life, double setPrice);
   virtual void plantGrow(int growthRate);
   virtual int plantHarvest();
   virtual void plantWater();

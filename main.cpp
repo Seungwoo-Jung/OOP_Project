@@ -1,3 +1,7 @@
+#include <ncurses.h>
+
+#include <iostream>
+
 #include "Equipment.h"
 #include "Field.h"
 #include "Fruit.h"
@@ -16,55 +20,52 @@ WINDOW *dispCreateField(Field field){
 
     WINDOW *windowField;
 
-    int windowY = field.get_sizeM() + 2;
-    int windowX = (3 * (field.get_sizeN())) + 4;
+  int windowY = field.get_sizeM() + 2;
+  int windowX = (3 * (field.get_sizeN())) + 4;
 
     windowField = newwin(windowY, windowX, (getmaxy(stdscr) - windowY) / 2, (getmaxx(stdscr) - windowX) / 2);
 
-    refresh();
+  refresh();
 
     box(windowField, 0, 0);
 
     mvwprintw(windowField, 0, 1, "Field");
 
-    for (int i = 1; i < windowY - 1; i++){
-        for (int j = 1; j < windowX - 1; j++){
-            if (j % 3 == 0){
-                attron(COLOR_PAIR(1));
-                mvwaddch(windowField, i, j, '=');
-                attroff(COLOR_PAIR(1));
-            } else {
-                attron(COLOR_PAIR(2));
-                mvwaddch(windowField, i, j, '.');
-                attroff(COLOR_PAIR(2));
-            }
-        }
+  for (int i = 1; i < windowY - 1; i++) {
+    for (int j = 1; j < windowX - 1; j++) {
+      if (j % 3 == 0) {
+        attron(COLOR_PAIR(1));
+        mvwaddch(windowField, i, j, '=');
+        attroff(COLOR_PAIR(1));
+      } else {
+        attron(COLOR_PAIR(2));
+        mvwaddch(windowField, i, j, '.');
+        attroff(COLOR_PAIR(2));
+      }
     }
+  }
 
-    wrefresh(windowField);
-    
-    return windowField;
+  wrefresh(windowField);
+
+  return windowField;
 }
 
-void dispFieldUpdate(WINDOW *window, Field field){
-
-    for (int i = 0; i < field.get_sizeM(); i++){
-        for (int j = 0; j < field.get_sizeN(); j++){
-            if (field.get_plant(i, j) != 0){
-                mvwaddch(window, i + 1, (j + 1) * 3, '#');
-            } else {
-                mvwaddch(window, i + 1, (j + 1) * 3, '=');
-
-            }
-        }
+void dispFieldUpdate(WINDOW *window, Field field) {
+  for (int i = 0; i < field.get_sizeM(); i++) {
+    for (int j = 0; j < field.get_sizeN(); j++) {
+      if (field.get_plant(i, j) != 0) {
+        mvwaddch(window, i + 1, (j + 1) * 3, '#');
+      } else {
+        mvwaddch(window, i + 1, (j + 1) * 3, '=');
+      }
     }
+  }
 
-    wrefresh(window);
+  wrefresh(window);
 }
 
-int main(){
-
-    std::cout << has_colors() << std::endl;
+int main() {
+  std::cout << has_colors() << std::endl;
 
     initscr();
     noecho();
@@ -98,6 +99,6 @@ int main(){
         gameRunning = false;
     }
 
-    endwin();
-    return 0;
+  endwin();
+  return 0;
 }

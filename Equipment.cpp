@@ -19,8 +19,9 @@ Equipment::Equipment() : Item() {
 
 // standard contructor feeds some value to the Item contructor, sets others as
 // the input ones, equipped as false, and currentUses as 0
-Equipment::Equipment(int setID, string setName, int totalUses, int impact)
-    : Item(setID, setName, "functional", totalUses) {
+Equipment::Equipment(int setID, string setName, int totalUses, int impact,
+                     double setprice)
+    : Item(setID, setName, "functional", totalUses, setprice) {
   equipped = false;
   effect = impact;
   currentUses = 0;

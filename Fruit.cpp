@@ -20,7 +20,7 @@ Fruit::Fruit() : Plant() {
 // constructor, while setting the production rate via the input value, and
 // currentfruit/production tracker are set at -1 for the purposes of
 // calculations
-Fruit::Fruit(int ID, string name, int life, int setRate, int setPrice)
+Fruit::Fruit(int ID, string name, int life, int setRate, double setPrice)
     : Plant(ID, name, life, setPrice) {
   productionRate = setRate;
   currentFruit = -1;

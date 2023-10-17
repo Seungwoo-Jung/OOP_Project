@@ -8,7 +8,7 @@ using namespace std;
 
 int main() {
   Equipment* e1 = new Equipment();
-  Equipment* e2 = new Equipment(1, "hoe", 100, 2);
+  Equipment* e2 = new Equipment(1, "hoe", 100, 2, 5.7);
 
   e1->getStatus();
   e2->getStatus();
