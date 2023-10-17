@@ -1,5 +1,8 @@
 #include "Field.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 25f174546402ee47766097f73d4208065f575038
 #include <string>
 
 Field::Field() {
