@@ -17,8 +17,12 @@ Inventory::Inventory() {
   plantCapacity = 0;
   equipmentCapacity = 0;
   funds = 0;
-  grain = 0;
-  fruit = 0;
+  wheat = 0;
+  rice = 0;
+  rye = 0;
+  apple = 0;
+  banana = 0;
+  pear = 0;
   isOpen = false;
   exists = false;
   plantFull = false;
@@ -35,8 +39,12 @@ Inventory::Inventory(int p, int e) {
   plantCapacity = p;
   equipmentCapacity = e;
   funds = 0;
-  grain = 0;
-  fruit = 0;
+  wheat = 0;
+  rice = 0;
+  rye = 0;
+  apple = 0;
+  banana = 0;
+  pear = 0;
   plantFull = false;
   equipFull = false;
   plantEmpty = true;
@@ -58,8 +66,12 @@ void Inventory::getContents() {
   if (isOpen == true && exists == true) {
     cout << endl << "Tradeable goods: " << endl << endl;
     cout << "Current Funds: " << getFunds() << "." << endl;
-    cout << "Current Fruit: " << getFruit() << "." << endl;
-    cout << "Current Grain: " << getGrain() << "." << endl;
+    cout << "Current Wheat: " << getWheat() << "." << endl;
+    cout << "Current Rice: " << getRice() << "." << endl;
+    cout << "Current Rye: " << getRye() << "." << endl;
+    cout << "Current Apple: " << getApple() << "." << endl;
+    cout << "Current Pear: " << getPear() << "." << endl;
+    cout << "Current Banana: " << getBanana() << "." << endl;
     cout << endl << "Plants: " << endl << endl;
     if (!plantInventory.empty()) {
       for (auto& pair : plantInventory) {
@@ -86,14 +98,25 @@ void Inventory::getContents() {
   }
 }
 
+// returns the equipment map, required for a different class
+unordered_map<int, Equipment*> Inventory::getEquipment() {
+  if (exists == true) {
+    return equipInventory;
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
 // following 3 functions open/close/return the current status (open or closed)
 // of the inventory, and calls the getContents function if opening. Only
 // activate if Inventory exists
 void Inventory::openInventory() {
-  if (exists == true) {
+  if (exists == true && isOpen == false) {
     isOpen = true;
     cout << "Opening Inventory: " << endl;
     getContents();
+  } else if (exists == true && isOpen == true) {
+    cout << "Unable, Inventory not closed";
   } else {
     cout << "Unable, Inventory does not exist" << endl;
   }
@@ -117,7 +140,7 @@ bool Inventory::inventoryOpen() {
   }
 }
 
-// the following 3 functions alter the current aamount of funds/grain/fruit on
+// the following 7 functions alter the current aamount of funds/grain/fruit on
 // hand. if the result is negative, the amount will be set to 0. Only activate
 // if Inventory exists
 void Inventory::changeFunds(double amount) {
@@ -132,24 +155,72 @@ void Inventory::changeFunds(double amount) {
   }
 }
 
-void Inventory::changeGrain(int amount) {
+void Inventory::changeWheat(int amount) {
   if (exists == true) {
-    if ((grain + amount) >= 0) {
-      grain = (grain + amount);
-    } else if ((grain + amount) < 0) {
-      grain = 0;
+    if ((wheat + amount) >= 0) {
+      wheat = (wheat + amount);
+    } else if ((wheat + amount) < 0) {
+      wheat = 0;
     }
   } else {
     cout << "Unable, Inventory does not exist" << endl;
   }
 }
 
-void Inventory::changeFruit(int amount) {
+void Inventory::changeRice(int amount) {
   if (exists == true) {
-    if ((fruit + amount) >= 0) {
-      fruit = (fruit + amount);
-    } else if ((fruit + amount) < 0) {
-      fruit = 0;
+    if ((rice + amount) >= 0) {
+      rice = (rice + amount);
+    } else if ((rice + amount) < 0) {
+      rice = 0;
+    }
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
+void Inventory::changeRye(int amount) {
+  if (exists == true) {
+    if ((rye + amount) >= 0) {
+      rye = (rye + amount);
+    } else if ((rye + amount) < 0) {
+      rye = 0;
+    }
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
+void Inventory::changeApple(int amount) {
+  if (exists == true) {
+    if ((apple + amount) >= 0) {
+      apple = (apple + amount);
+    } else if ((apple + amount) < 0) {
+      apple = 0;
+    }
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
+void Inventory::changePear(int amount) {
+  if (exists == true) {
+    if ((pear + amount) >= 0) {
+      pear = (pear + amount);
+    } else if ((pear + amount) < 0) {
+      pear = 0;
+    }
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
+void Inventory::changeBanana(int amount) {
+  if (exists == true) {
+    if ((banana + amount) >= 0) {
+      banana = (banana + amount);
+    } else if ((banana + amount) < 0) {
+      banana = 0;
     }
   } else {
     cout << "Unable, Inventory does not exist" << endl;
@@ -159,8 +230,11 @@ void Inventory::changeFruit(int amount) {
 // checks if either plant or equipment is full and returns the value.
 bool Inventory::pFull() { return plantFull; }
 bool Inventory::eFull() { return equipFull; }
+bool Inventory::pEmpty() { return plantEmpty; }
+bool Inventory::eEmpty() { return equipEmpty; }
 
-// These 3 functions return the current funds, grain and fruit respectively
+// These 7 functions return the current funds, and amount of each plant species
+// respectively
 double Inventory::getFunds() {
   if (exists == true) {
     return funds;
@@ -169,17 +243,47 @@ double Inventory::getFunds() {
   }
 }
 
-int Inventory::getGrain() {
+int Inventory::getWheat() {
   if (exists == true) {
-    return grain;
+    return wheat;
   } else {
     cout << "Unable, Inventory does not exist" << endl;
   }
 }
 
-int Inventory::getFruit() {
+int Inventory::getRice() {
   if (exists == true) {
-    return fruit;
+    return rice;
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+int Inventory::getRye() {
+  if (exists == true) {
+    return rye;
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
+int Inventory::getApple() {
+  if (exists == true) {
+    return apple;
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+int Inventory::getPear() {
+  if (exists == true) {
+    return pear;
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+}
+
+int Inventory::getBanana() {
+  if (exists == true) {
+    return banana;
   } else {
     cout << "Unable, Inventory does not exist" << endl;
   }
