@@ -1,11 +1,13 @@
 #include "Shop.h"
+#include <string>
+#include <fstream>
 
-Shop::Shop() {
-    //setting the item costs.
-}
+using namespace std;
 
-void Shop::buyGrain(Inventory &inventory, int amount) {
-    // double cost =  * amount; (need to find the way to load which grain and its price)
+Shop::Shop() {}
+
+void Shop::buyGrain(Inventory &inventory, int amount, int ID) {
+    int cost = priceList[ID];
 
     if (inventory.getFunds() >= cost) {
         inventory.changeFunds(-cost);
@@ -16,9 +18,9 @@ void Shop::buyGrain(Inventory &inventory, int amount) {
     }
 }
 
-void Shop::sellGrain(Inventory &inventory, int amount) {
+void Shop::sellGrain(Inventory &inventory, int amount, int ID) {
     if (inventory.getGrain() >= amount) {
-        // double revenue =  * amount;  (need to find the way how to load which grain and its price)
+        int revenue = revenueList[ID] * amount;
         inventory.changeFunds(revenue);
         inventory.changeGrain(-amount);
         cout << "You have sold "<<amount<<" grains for $"<<revenue<<endl; 
@@ -27,8 +29,8 @@ void Shop::sellGrain(Inventory &inventory, int amount) {
     }
 }
 
-void Shop::buyFruit(Inventory &inventory, int amount) { 
-    // double cost =  *amount; (need to find the way how to load which fruit and its price)
+void Shop::buyFruit(Inventory &inventory, int amount, int ID) { 
+    int cost = priceList[ID];
 
     if(inventory.getFunds() >= cost){
         inventory.changeFunds(-cost);  
@@ -39,9 +41,9 @@ void Shop::buyFruit(Inventory &inventory, int amount) {
     }
 }
 
-void Shop::sellFruit(Inventory &inventory,int amount){
+void Shop::sellFruit(Inventory &inventory,int amount, int ID){
     if(inventory.getFruit()>=amount){
-        // double revenue = fruitPrice * amount; (need to find the way to load which fruit and its price)
+        int revenue = revenueList[ID] * amount;
         inventory.changeFunds(revenue);  
         inventory.changeFruit(-amount);
         cout<<"You have sold "<<amount<<" fruits for $"<<revenue<<endl; 
@@ -50,8 +52,8 @@ void Shop::sellFruit(Inventory &inventory,int amount){
     }
 }
 
-void Shop::buyEquipment(Inventory &inventory, Equipment* equipment) {
-    // double cost = (need to find the way to load which equipment and its price)
+void Shop::buyEquipment(Inventory &inventory, Equipment* equipment, int ID) {
+    int cost = priceList[ID];
 
     if (inventory.getFunds() >= cost) {
         inventory.changeFunds(-cost);
@@ -62,8 +64,8 @@ void Shop::buyEquipment(Inventory &inventory, Equipment* equipment) {
     }
 }
 
-void Shop::sellEquipment(Inventory &inventory, Equipment* equipment) {
-    // double revenue = (need to find the way to load which equipment and its price)
+void Shop::sellEquipment(Inventory &inventory, Equipment* equipment, int ID) {
+    int revenue = revenueList[ID];
 
     if (equipment != nullptr && !equipment->itemEquipped()) {
         inventory.removeEquipment(equipment->getID());
@@ -74,3 +76,5 @@ void Shop::sellEquipment(Inventory &inventory, Equipment* equipment) {
         cout<<"No such unequipped item in your Inventory to sell."<<endl; 
     }
 }
+
+Shop::~Shop() {}
