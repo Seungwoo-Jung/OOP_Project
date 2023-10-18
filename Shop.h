@@ -79,5 +79,4 @@ class Shop {
   void sellEquipment(Inventory& inventory, Equipment* equipment, int ID);
   ~Shop();
 };
-
 #endif

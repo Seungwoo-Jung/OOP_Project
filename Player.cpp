@@ -22,16 +22,23 @@ char Player::Navigate() {
 
 void Player::passTime() { timepassed = timepassed + 1; }
 
-void Player::loadData() {
+int Player::loadData() {
   ifstream loadFile("player.txt");
-  loadFile >> userID >> Currency;
-  loadFile.close();
+  if (loadFile.is_open()) {
+    loadFile >> userID >> Currency;
+    loadFile.close();
+  }
+  return userID, Currency;
 }
 
 void Player::saveData() {
   ofstream saveFile("player.txt");
-  saveFile << userID << "\n" << Currency << "\n";
-  saveFile.close();
+  if (saveFile.is_open()) {
+    saveFile << userID << "\n" << Currency << "\n";
+    saveFile.close();
+  } else {
+    cout << "unable to open file" << endl;
+  }
 }
 
 Player::~Player() {}
