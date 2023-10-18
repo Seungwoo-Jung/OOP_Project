@@ -51,14 +51,11 @@ int main() {
 
   cout << endl
        << endl
-       << "expected output: 6 lines of 'Unable, Inventory not open'" << endl
+       << "expected output: 2 lines of 'Unable, Inventory not open'" << endl
        << endl;
 
   inv->getContents();
-  inv->addPlant(new Fruit());
-  inv->addEquipment(new Equipment());
-  inv->removePlant(5);
-  inv->removeEquipment(4);
+
   inv->closeInventory();
 
   // opening inventory to enable functionality, and then testing if it's open

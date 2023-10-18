@@ -17,8 +17,12 @@ class Inventory {
   int plantCapacity;
   int equipmentCapacity;
   double funds;
-  int grain;
-  int fruit;
+  int wheat;
+  int rye;
+  int apple;
+  int rice;
+  int banana;
+  int pear;
   bool isOpen;
   bool plantFull;
   bool equipFull;
@@ -37,16 +41,28 @@ class Inventory {
   bool inventoryOpen();
 
   void getContents();
+  unordered_map<int, Equipment*> getEquipment();
+
   bool pFull();
   bool eFull();
+  bool pEmpty();
+  bool eEmpty();
 
   void changeFunds(double amount);
-  void changeGrain(int amount);
-  void changeFruit(int amount);
+  void changeWheat(int amount);
+  void changeRye(int amount);
+  void changeRice(int amount);
+  void changePear(int amount);
+  void changeApple(int amount);
+  void changeBanana(int amount);
 
   double getFunds();
-  int getGrain();
-  int getFruit();
+  int getWheat();
+  int getRye();
+  int getRice();
+  int getPear();
+  int getApple();
+  int getBanana();
 
   void addPlant(Plant* p1);
   void removePlant(int ID);

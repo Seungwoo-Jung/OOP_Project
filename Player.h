@@ -20,7 +20,7 @@ class Player {
  public:
   Player();
   char Navigate();
-  void loadData();
+  int loadData();
   void saveData();
   void passTime();
   ~Player();

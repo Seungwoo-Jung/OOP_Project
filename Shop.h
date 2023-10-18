@@ -12,14 +12,33 @@
 
 using namespace std;
 typedef vector<string> NameList;
+typedef vector<string> eNameList;
 typedef vector<int> PriceList;
+typedef vector<int> LifeList;
+typedef vector<int> YieldList;
 typedef vector<int> RevenueList;
-NameList nameList;
-PriceList priceList;
-RevenueList revenueList;
+typedef vector<int> ePriceList;
+typedef vector<int> eLifeList;
+typedef vector<int> eRevenueList;
+typedef vector<int> EffectList;
+NameList nameList = {"Wheat", "Rice", "Rye", "Apple", "Pear", "Banana"};
+eNameList enameList = {"Hoe", "Shovel", "Fertiliser", "Weeder"};
+PriceList priceList = {15, 20, 25, 50, 75, 100};
+LifeList lifeList = {30, 40, 50, 100, 150, 200};
+YieldList yieldList = {10, 20, 30, 5, 4, 3};
+EffectList effectList = {3, 1, 4, 2};
+ePriceList epriceList = {75, 25, 100, 50};
+eLifeList elifeList = {40, 50, 20, 30};
+eRevenueList erevenueList = {37, 12, 50, 25};
+RevenueList revenueList = {2, 3, 4, 5, 7, 10};
 
 class Shop {
  private:
+  int IDused;
+  int eIDused;
+  bool isOpen;
+  bool exists;
+
  public:
   Shop();
 
@@ -69,15 +88,14 @@ class Shop {
     }
   };
 
-  void buyGrain(Inventory& inventory, int amount, int ID);
-  void sellGrain(Inventory& inventory, int amount, int ID);
+  void buyPlant(Inventory& inventory, int amount, int ID);
+  void sellPlant(Inventory& inventory, int amount, int ID);
 
-  void buyFruit(Inventory& inventory, int amount, int ID);
-  void sellFruit(Inventory& inventory, int amount, int ID);
+  void buyEquipment(Inventory& inventory, int ID);
+  void sellEquipment(Inventory& inventory, int mapID, int ID);
 
-  void buyEquipment(Inventory& inventory, Equipment* equipment, int ID);
-  void sellEquipment(Inventory& inventory, Equipment* equipment, int ID);
+  void openShop();
+  void closeShop();
   ~Shop();
 };
-
 #endif
