@@ -32,7 +32,6 @@ void Field::set_plant(Plant *plant, int row, int column){
 }
 
 void Field::remove_plant(int row, int column){
-	//fieldMatrix[row].erase(fieldMatrix[row].begin() + column);
 	fieldMatrix[row][column] = 0;
 }
 
