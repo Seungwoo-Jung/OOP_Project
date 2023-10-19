@@ -19,6 +19,7 @@ class Item {
   // function set as 0 to make class abstract
   virtual void getStatus() = 0;
   int getID() const;
+  string getName();
   virtual ~Item();
 };
 

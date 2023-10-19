@@ -18,7 +18,7 @@ Grain::Grain(int ID, string name, int life, int setyield)
 }
 
 // the destructor prints out a message detailing the deletion
-Grain::~Grain() { cout << "grain with ID " << ID << " was deleted" << endl; }
+Grain::~Grain() { cout << name << " with ID " << ID << " was deleted" << endl; }
 
 // the plantGrow function has multiple parts to manage the growth of the plant.
 // Nothing at all will occur if the pant is not alive or does not exist

@@ -54,7 +54,7 @@ Inventory::Inventory(int p, int e) {
   addPlant(new Fruit(1, "Apple", 50, 2));
   addPlant(new Grain(2, "Wheat", 20, 10));
   addPlant(new Grain(3, "Rice", 20, 15));
-  addEquipment(new Equipment(4, "shovel", 50, 1));
+  addEquipment(new Equipment(4, "Shovel", 50, 1));
 
   isOpen = false;
 }
@@ -327,9 +327,10 @@ void Inventory::addPlant(Plant* p1) {
   if (exists == true) {
     if (plantInventory.size() < plantCapacity) {
       plantInventory[p1->getID()] = p1;
-      cout << "Plant with id " << p1->getID() << " was added" << endl;
+      cout << p1->getName() << " with id " << p1->getID() << " was added"
+           << endl;
     } else {
-      cout << "Unable to add more Plants - Inventory full" << endl;
+      cout << "Unable to add " << p1->getName() << " - Inventory full" << endl;
     }
   } else {
     cout << "Unable, Inventory does not exist" << endl;
@@ -349,8 +350,9 @@ void Inventory::removePlant(int plantID) {
   if (exists == true) {
     auto it = plantInventory.find(plantID);
     if (it != plantInventory.end()) {
+      string name = plantInventory[plantID]->getName();
+      cout << name << " with id " << plantID << " was removed" << endl;
       plantInventory.erase(it);
-      cout << "Plant with id " << plantID << " was removed" << endl;
     } else {
       cout << "Unable to remove Plant - Item not in inventory" << endl;
     }
@@ -372,9 +374,10 @@ void Inventory::addEquipment(Equipment* e1) {
   if (exists == true) {
     if (equipInventory.size() < equipmentCapacity) {
       equipInventory[e1->getID()] = e1;
-      cout << "Equipment with id " << e1->getID() << " was added" << endl;
+      cout << e1->getName() << " with id " << e1->getID() << " was added"
+           << endl;
     } else {
-      cout << "Unable to add more Equipment - Inventory full" << endl;
+      cout << "Unable to add " << e1->getName() << " - Inventory full" << endl;
     }
   } else {
     cout << "Unable, Inventory does not exist" << endl;
@@ -394,10 +397,11 @@ void Inventory::removeEquipment(int EquipmentID) {
   if (exists == true) {
     auto it = equipInventory.find(EquipmentID);
     if (it != equipInventory.end()) {
+      string name = equipInventory[EquipmentID]->getName();
       equipInventory.erase(it);
-      cout << "Equipment with id " << EquipmentID << " was removed" << endl;
+      cout << name << " with id " << EquipmentID << " was removed" << endl;
     } else {
-      cout << "Unable to remove Equipment - Item not in inventory" << endl;
+      cout << "Unable to remove Equipment - Item not in inventory " << endl;
     }
   } else {
     cout << "Unable, Inventory does not exist" << endl;

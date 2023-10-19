@@ -27,7 +27,7 @@ Fruit::Fruit(int ID, string name, int life, int setRate)
 }
 
 // the destructor prints out a message detailing the deletion
-Fruit::~Fruit() { cout << "fruit with ID " << ID << " was deleted" << endl; }
+Fruit::~Fruit() { cout << name << " with ID " << ID << " was deleted" << endl; }
 
 // the plantGrow function has multiple parts to manage the growth of the plant.
 // Nothing at all will occur if the pant is not alive or does not exist
