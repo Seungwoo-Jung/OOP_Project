@@ -72,27 +72,10 @@ int main() {
     // init_pair(2, COLOR_WHITE, COLOR_BLACK);
     // init_pair(3, COLOR_GREEN, COLOR_BLACK);
 
-    bool gameRunning = true;
+    Field field(5, 6);
+    WINDOW *window;
 
-    while (gameRunning == true){
-
-        Field field(5, 6);
-        WINDOW *window;
-
-        window = dispCreateField(field);
-
-        getch();
-
-        Grain grain(0, "Wheat", 5, 10);
-
-        field.set_plant(&grain, 1, 1);
-
-        dispFieldUpdate(window, field);
-
-        getch();
-
-        gameRunning = false;
-    }
+    window = dispCreateField(field);
 
     ITEM **menuItems;
     MENU *menu;
@@ -116,6 +99,16 @@ int main() {
     post_menu(menu);
 
     wrefresh(menuWindow);
+
+    getch();
+
+    // Grain grain(0, "Wheat", 5, 10);
+
+    // field.set_plant(&grain, 1, 1);
+
+    // dispFieldUpdate(window, field);
+
+    getch();
 
     int c;
 
