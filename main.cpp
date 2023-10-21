@@ -59,7 +59,6 @@ void dispFieldUpdate(WINDOW *window, Field field) {
 
     wrefresh(window);
 }
-    const char *menuChoices[5] = {"Choice 1", "Choice 2", "Choice 3", "Choice 4", "Exit"};
 
 int main() {
 
@@ -99,6 +98,7 @@ int main() {
     MENU *menu;
     WINDOW *menuWindow;
 
+    const char *menuChoices[5] = {"Choice 1", "Choice 2", "Choice 3", "Choice 4", "Exit"};
 
     for (int i = 0; i < 5; i++){
         menuItems[i] = new_item(menuChoices[i], menuChoices[i]);
