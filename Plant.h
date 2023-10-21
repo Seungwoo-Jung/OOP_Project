@@ -19,6 +19,8 @@ class Plant : public Item {
   virtual int plantHarvest();
   virtual void plantWater();
   virtual void getStatus();
+  int getRate();
+  void setRate(int rate);
   virtual ~Plant();
 };
 

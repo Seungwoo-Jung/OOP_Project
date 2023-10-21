@@ -42,6 +42,7 @@ class Inventory {
 
   void getContents();
   unordered_map<int, Equipment*> getEquipment();
+  unordered_map<int, Plant*> getPlants();
 
   bool pFull();
   bool eFull();

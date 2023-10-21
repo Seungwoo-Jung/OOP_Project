@@ -93,7 +93,7 @@ class Shop {
   void sellPlant(Inventory& inventory, int amount, int ID);
 
   void buyEquipment(Inventory& inventory, int ID);
-  void sellEquipment(Inventory& inventory, int mapID, int ID);
+  void sellEquipment(Inventory& inventory, Equipment* Equipment, int ID);
 
   void openShop();
   void closeShop();

@@ -111,7 +111,10 @@ int Fruit::plantHarvest() {
   if (status != "dead" && status != "null") {
     int yield = currentFruit;
     currentFruit = 0;
+    cout << " A Yield of " << yield << " " << name << " was received." << endl;
     return yield;
+  } else {
+    cout << "No " << name << " received, plant is dead." << endl;
   }
   return 0;
 }

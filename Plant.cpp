@@ -25,9 +25,15 @@ Plant::Plant(int ID, string name, int life) : Item(ID, name, "growing", life) {
   growthRate = 1;
 }
 
+// sets the growth rate of the plant using the input
+void Plant::setRate(int rate) { growthRate = rate; }
+
+// returns the growth rate of the plant
+int Plant::getRate() { return growthRate; };
+
 // functions declared as virtual in the Plant.h file to be used in subclasses
-void Plant::plantGrow(int growthRate){};
-int Plant::plantHarvest() { return 0; };
-void Plant::plantWater(){};
-void Plant::getStatus(){};
-Plant::~Plant(){};
+void Plant::plantGrow(int growthRate) {}
+int Plant::plantHarvest() { return 0; }
+void Plant::plantWater() {}
+void Plant::getStatus() {}
+Plant::~Plant() {}
