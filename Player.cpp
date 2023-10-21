@@ -72,7 +72,7 @@ void Player::passTime(Field* field, Inventory* inv) {
   std::vector<std::vector<Plant*>> matrix = field->getField();
   int i = 0, j = 0;
   int rate = 1;
-  cout << "day " << timepassed << "has ended." << endl;
+  cout << "day " << timepassed << " has ended." << endl;
   for (auto& pair : equipment) {
     if (pair.second->itemEquipped() == true) {
       rate = pair.second->getEffect();
@@ -355,6 +355,7 @@ void Player::invAction(Inventory* inv) {
   int ID = -1;
   unordered_map<int, Equipment*> equipment = inv->getEquipment();
   while (done == false) {
+    equipment = inv->getEquipment();
     input = '0';
     ID = -1;
     cout << "What would you like to do? V: view contents; E: equip item; R: "
@@ -369,15 +370,39 @@ void Player::invAction(Inventory* inv) {
         break;
       case 'R':
       case 'r':
-        cout << "Enter the ID of the item you want to remove" << endl;
-        cin >> ID;
-        inv->removeEquipment(ID);
+        if (!equipment.empty()) {
+          cout << "Enter the ID of the item you want to remove" << endl;
+          while (true) {
+            if (std::cin >> ID) {
+              break;
+            } else {
+              std::cin.clear();
+              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                              '\n');
+              std::cout << "Invalid input. Please enter an integer."
+                        << std::endl;
+            }
+          }
+          inv->removeEquipment(ID);
+        } else {
+          cout << "No Equipment in inventory" << endl;
+        }
         break;
       case 'e':
       case 'E':
-        cout << "Enter the ID of the item you want to equip" << endl;
-        cin >> ID;
         if (!equipment.empty()) {
+          cout << "Enter the ID of the item you want to equip" << endl;
+          while (true) {
+            if (std::cin >> ID) {
+              break;
+            } else {
+              std::cin.clear();
+              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                              '\n');
+              std::cout << "Invalid input. Please enter an integer."
+                        << std::endl;
+            }
+          }
           auto it = equipment.find(ID);
           if (it != equipment.end()) {
             for (auto& pair : equipment) {
@@ -391,7 +416,7 @@ void Player::invAction(Inventory* inv) {
             cout << "Item not found " << endl;
           }
         } else {
-          cout << "No items in Inventory" << endl;
+          cout << "No Equipment in Inventory" << endl;
         }
         break;
       case 'c':

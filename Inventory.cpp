@@ -123,7 +123,6 @@ void Inventory::openInventory() {
   if (exists == true && isOpen == false) {
     isOpen = true;
     cout << "Opening Inventory: " << endl;
-    getContents();
   } else if (exists == true && isOpen == true) {
     cout << "Unable, Inventory not closed" << endl;
   } else {
@@ -336,8 +335,8 @@ void Inventory::addPlant(Plant* p1) {
   if (exists == true) {
     if (plantInventory.size() < plantCapacity) {
       plantInventory[p1->getID()] = p1;
-      cout << p1->getName() << " with id " << p1->getID() << " was added"
-           << endl;
+      cout << p1->getName() << " with id " << p1->getID()
+           << " was added to inventory" << endl;
     } else {
       cout << "Unable to add " << p1->getName() << " - Inventory full" << endl;
     }
@@ -360,7 +359,8 @@ void Inventory::removePlant(int plantID) {
     auto it = plantInventory.find(plantID);
     if (it != plantInventory.end()) {
       string name = plantInventory[plantID]->getName();
-      cout << name << " with id " << plantID << " was removed" << endl;
+      cout << name << " with id " << plantID << " was removed from Inventory"
+           << endl;
       plantInventory.erase(it);
     } else {
       cout << "Unable to remove Plant - Item not in inventory" << endl;
@@ -383,8 +383,8 @@ void Inventory::addEquipment(Equipment* e1) {
   if (exists == true) {
     if (equipInventory.size() < equipmentCapacity) {
       equipInventory[e1->getID()] = e1;
-      cout << e1->getName() << " with id " << e1->getID() << " was added"
-           << endl;
+      cout << e1->getName() << " with id " << e1->getID()
+           << " was added to inventory" << endl;
     } else {
       cout << "Unable to add " << e1->getName() << " - Inventory full" << endl;
     }
@@ -407,8 +407,10 @@ void Inventory::removeEquipment(int EquipmentID) {
     auto it = equipInventory.find(EquipmentID);
     if (it != equipInventory.end()) {
       string name = equipInventory[EquipmentID]->getName();
+      equipInventory[EquipmentID]->unequip();
       equipInventory.erase(it);
-      cout << name << " with id " << EquipmentID << " was removed" << endl;
+      cout << name << " with id " << EquipmentID
+           << " was removed from inventory" << endl;
     } else {
       cout << "Unable to remove Equipment - Item not in inventory " << endl;
     }

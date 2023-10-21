@@ -24,6 +24,9 @@ Equipment::Equipment(int setID, string setName, int totalUses, int impact)
   equipped = false;
   effect = impact;
   currentUses = 0;
+  if (setName == "Fertiliser" || setName == "fertiliser") {
+    status = "usable";
+  }
 };
 
 // destructor prints out message detailing deletion
@@ -57,34 +60,48 @@ bool Equipment::itemEquipped() { return equipped; }
 // equip function equips the item - if it exists
 void Equipment::equip() {
   if (status != "null") {
-    equipped = true;
-    cout << name << " with ID " << ID << "equipped" << endl;
+    if (equipped != true) {
+      equipped = true;
+      cout << name << " with ID " << ID << " equipped" << endl;
+    } else {
+      cout << "This item is already equipped" << endl;
+    }
   }
 }
 
 // unequip function unequips item - if it exists
 void Equipment::unequip() {
   if (status != "null") {
-    equipped = false;
+    if (equipped != false) {
+      cout << name << " with ID " << ID << " unequipped" << endl;
+      equipped = false;
+    }
   }
 }
 
 // use function uses the item depending on it's status. If the item exists, and
 // is equipped and functional it will use it once. it will then print a message
-// showing the amount of uses, and update the status to be broken once it
+// showing the amount of uses, and update the status to be broken/empty once it
 // reaches it's lifespan amount of uses, after which it will not be used Returns
 // the effect on growth the item has.
 int Equipment::use() {
   if (equipped == true && currentUses <= lifespan) {
     if (status != "broken") {
       currentUses = currentUses + 1;
-      cout << name << " with ID " << ID << "was used." << endl;
+      cout << name << " with ID " << ID << " was used." << endl;
       cout << "Current uses: " << currentUses << " out of " << lifespan << "."
            << endl;
       if (currentUses == lifespan) {
-        status = "broken";
+        if (name == "Fertiliser" || name == "fertiliser") {
+          status = "empty";
+        } else {
+          status = "broken";
+        }
       }
       cout << "status: " << status << "." << endl;
+      if (status == "broken" || status == "empty") {
+        effect = 1;
+      }
     }
     return effect;
   } else {
