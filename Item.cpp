@@ -24,5 +24,8 @@ Item::Item(int setID, string setname, string setstatus, int life) {
 // returns the id of the item for reference
 int Item::getID() const { return ID; }
 
+// returns the item name for reference
+string Item::getName() { return name; }
+
 // empty destructor
 Item::~Item() {}

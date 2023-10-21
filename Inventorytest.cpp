@@ -13,23 +13,36 @@ int main() {
 
   Inventory in = Inventory();
 
-  cout << "expected output: 14 lines of 'Unable, Inventory does not exist'"
+  cout << "expected output: 27 lines of 'Unable, Inventory does not exist'"
        << endl
        << endl;
 
   // all functions should not actvate due to the object not existing,
   // hence we should expect to get the message "Unable, Inventory does
-  // not exist" for each (14 times)
+  // not exist" for each (27 times)
   in.openInventory();
   in.closeInventory();
   in.inventoryOpen();
   in.getContents();
   in.changeFunds(1);
-  in.changeFruit(2);
-  in.changeGrain(3);
+  in.changeWheat(2);
+  in.changeRice(3);
+  in.changeRye(2);
+  in.changeApple(3);
+  in.changePear(2);
+  in.changeBanana(3);
+  in.pFull();
+  in.pEmpty();
+  in.eFull();
+  in.eEmpty();
+  in.getEquipment();
   in.getFunds();
-  in.getFruit();
-  in.getGrain();
+  in.getWheat();
+  in.getRice();
+  in.getRye();
+  in.getApple();
+  in.getPear();
+  in.getBanana();
   in.addPlant(new Fruit());
   in.addEquipment(new Equipment());
   in.removePlant(30);
@@ -47,7 +60,7 @@ int main() {
   Inventory* inv = new Inventory(4, 4);
 
   // testing functions while inventory is closed, should output "Unable,
-  // inventory not open" for each (6 times)
+  // inventory not open" for each (2 times)
 
   cout << endl
        << endl
@@ -55,7 +68,6 @@ int main() {
        << endl;
 
   inv->getContents();
-
   inv->closeInventory();
 
   // opening inventory to enable functionality, and then testing if it's open
@@ -64,52 +76,81 @@ int main() {
   cout << endl
        << endl
        << "expected output: '0, Opening Inventory, (results from getContents), "
-          "1' "
+          "1, followed by a line of Unable, Inventory not closed' "
        << endl
        << endl;
 
   cout << inv->inventoryOpen() << endl << endl;
   inv->openInventory();
   cout << inv->inventoryOpen() << endl;
+  inv->openInventory();
 
-  // testing the retrieval and alteration of the Funds/Fruit/Grain totals
+  // testing the retrieval and alteration of the funds and plant totals
 
   // testing for initial values
-  cout << endl << "expected output: 0, 0, 0" << endl << endl;
+  cout << endl << "expected output: 7 lines of 0" << endl << endl;
 
   cout << inv->getFunds() << endl;
-  cout << inv->getGrain() << endl;
-  cout << inv->getFruit() << endl;
+  cout << inv->getWheat() << endl;
+  cout << inv->getRye() << endl;
+  cout << inv->getRice() << endl;
+  cout << inv->getPear() << endl;
+  cout << inv->getApple() << endl;
+  cout << inv->getBanana() << endl;
 
   // testing for positive values
-  cout << endl << "expected output: 59.7, 6000, 2" << endl << endl;
-  inv->changeFunds(59.7);
-  inv->changeGrain(6000);
-  inv->changeFruit(2);
+  cout << endl << "expected output: 4, 3, 8, 2, 99, 1332, 655" << endl << endl;
+  inv->changeFunds(4);
+  inv->changeWheat(3);
+  inv->changeRye(8);
+  inv->changeRice(2);
+  inv->changePear(99);
+  inv->changeApple(1332);
+  inv->changeBanana(655);
 
   cout << inv->getFunds() << endl;
-  cout << inv->getGrain() << endl;
-  cout << inv->getFruit() << endl;
+  cout << inv->getWheat() << endl;
+  cout << inv->getRye() << endl;
+  cout << inv->getRice() << endl;
+  cout << inv->getPear() << endl;
+  cout << inv->getApple() << endl;
+  cout << inv->getBanana() << endl;
 
   // testing for null inputs
-  cout << endl << "expected output: 59.7, 6000, 2" << endl << endl;
+  cout << endl << "expected output: 4, 3, 8, 2, 99, 1332, 655" << endl << endl;
   inv->changeFunds(0);
-  inv->changeGrain(0);
-  inv->changeFruit(0);
+  inv->changeWheat(0);
+  inv->changeRye(0);
+  inv->changeRice(0);
+  inv->changePear(0);
+  inv->changeApple(0);
+  inv->changeBanana(0);
 
   cout << inv->getFunds() << endl;
-  cout << inv->getGrain() << endl;
-  cout << inv->getFruit() << endl;
+  cout << inv->getWheat() << endl;
+  cout << inv->getRye() << endl;
+  cout << inv->getRice() << endl;
+  cout << inv->getPear() << endl;
+  cout << inv->getApple() << endl;
+  cout << inv->getBanana() << endl;
 
   // testing for negatives and if the result would be negative
-  cout << endl << "expected output: 1.35, 5998, 0" << endl << endl;
-  inv->changeFunds(-58.35);
-  inv->changeGrain(-2);
-  inv->changeFruit(-9122);
+  cout << endl << "expected output: 1, 0, 0, 0, 98, 1326, 655" << endl << endl;
+  inv->changeFunds(-3);
+  inv->changeWheat(-3);
+  inv->changeRye(-19343);
+  inv->changeRice(-654);
+  inv->changePear(-1);
+  inv->changeApple(-6);
+  inv->changeBanana(-0);
 
   cout << inv->getFunds() << endl;
-  cout << inv->getGrain() << endl;
-  cout << inv->getFruit() << endl;
+  cout << inv->getWheat() << endl;
+  cout << inv->getRye() << endl;
+  cout << inv->getRice() << endl;
+  cout << inv->getPear() << endl;
+  cout << inv->getApple() << endl;
+  cout << inv->getBanana() << endl;
 
   // testing adding a plant and equipment item:
   cout << endl

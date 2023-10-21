@@ -1,6 +1,5 @@
 #include "Shop.h"
 
-#include <fstream>
 #include <string>
 
 #include "Equipment.h"
@@ -12,11 +11,22 @@
 
 using namespace std;
 
-// contructor, sets the ID used variable as 0, open as false, and exists as true
+// contructor, sets the ID used variable as 5, open as false, and exists as true
 Shop::Shop() {
-  IDused = 0;
+  IDused = 5;
+  eIDused = 5;
   isOpen = false;
   exists = true;
+  nameList = {"Wheat", "Rice", "Rye", "Apple", "Pear", "Banana"};
+  enameList = {"Hoe", "Shovel", "Fertiliser", "Weeder"};
+  priceList = {15, 20, 25, 50, 75, 100};
+  lifeList = {30, 40, 50, 100, 150, 200};
+  yieldList = {10, 20, 30, 5, 4, 3};
+  effectList = {3, 1, 4, 2};
+  epriceList = {75, 25, 100, 50};
+  elifeList = {40, 50, 20, 30};
+  erevenueList = {37, 12, 50, 25};
+  revenueList = {2, 3, 4, 5, 7, 10};
 }
 
 // buy Plant function buys a plant of a specified type using the ID to identify
@@ -27,27 +37,54 @@ Shop::Shop() {
 // determine the amount which was bought
 void Shop::buyPlant(Inventory &inventory, int amount, int ID) {
   if (exists == true && isOpen == true) {
-    int cost = (priceList[ID] * amount);
-    string name = nameList[ID];
-    int lifespan = lifeList[ID];
-    int yield = yieldList[ID];
-    int bought = 0;
+    if (amount >= 0) {
+      int cost = priceList[ID];
+      string name = nameList[ID];
+      int lifespan = lifeList[ID];
+      int yield = yieldList[ID];
+      int bought = 0;
+      int value = IDused;
 
-    if (inventory.getFunds() >= cost) {
-      for (int i = IDused; i < (IDused + amount); i++) {
-        if (inventory.pFull() == false) {
-          inventory.addPlant(new Grain(IDused, name, lifespan, yield));
-          IDused = IDused + 1;
-          bought = (bought + 1);
-          cost = (priceList[ID] * bought);
+      for (int i = value; i < (value + amount); i++) {
+        if (amount == 0 || inventory.getFunds() >= cost) {
+          if (amount == 0 || inventory.pFull() == false) {
+            if (name == "Rye" || name == "rye" || name == "Rice" ||
+                name == "rice" || name == "wheat" || name == "Wheat") {
+              inventory.addPlant(new Grain(IDused, name, lifespan, yield));
+            } else if (name == "apple" || name == "Apple" || name == "Pear" ||
+                       name == "pear" || name == "banana" || name == "Banana") {
+              inventory.addPlant(new Fruit(IDused, name, lifespan, yield));
+            }
+            IDused = IDused + 1;
+            bought = (bought + 1);
+            cost = (priceList[ID] * bought);
+            inventory.changeFunds((0 - cost));
+          } else {
+            cout << "Unable to buy " << name << ", Inventory Full" << endl;
+          }
         } else {
-          cout << "Unable to buy more items, Inventory Full";
+          cout << "Not enough funds to buy " << name << "." << endl;
         }
       }
-      cout << "You have bought " << bought << " " << name << "for $" << cost
-           << endl;
+      cost = (priceList[ID] * bought);
+      if ((bought > 0 || amount == 0) &&
+          (name == "wheat" || name == "Wheat" || name == "rye" ||
+           name == "Rye" || name == "rice" || name == "Rice")) {
+        cout << "You have bought " << bought << " " << name << " for $" << cost
+             << endl;
+      } else if ((bought > 0 || amount == 0) &&
+                 (name == "apple" || name == "Apple" || name == "pear" ||
+                  name == "Pear" || name == "banana" || name == "Banana")) {
+        if (bought == 1 || amount == 1) {
+          cout << "You have bought " << bought << " " << name << " for $"
+               << cost << endl;
+        } else {
+          cout << "You have bought " << bought << " " << name << "s for $"
+               << cost << endl;
+        }
+      }
     } else {
-      cout << "Not enough funds to buy grain." << endl;
+      cout << "Invalid amount, must be greater than or equal to 0" << endl;
     }
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
@@ -59,110 +96,176 @@ void Shop::buyPlant(Inventory &inventory, int amount, int ID) {
 // Sells a certain amount of plants, using the ID to specify the species and
 // pricing. decreases the amount of that item in your inventory. Only functions
 // if the inventory has some of that item, and the shop is both open and exists
-// Different cases are used for each possible type of plant.
+// Different cases are used for each possible type of plant. If statements are
+// used to determine the species for smooth functioning
 void Shop::sellPlant(Inventory &inventory, int amount, int ID) {
   if (exists == true && isOpen == true) {
-    string name = nameList[ID];
-    int lifespan = lifeList[ID];
-    int yield = yieldList[ID];
-    int revenue = revenueList[ID];
-    int sold = 0;
+    if (amount >= 0) {
+      string name = nameList[ID];
+      int lifespan = lifeList[ID];
+      int yield = yieldList[ID];
+      int revenue = revenueList[ID];
+      int sold = 0;
 
-    if (inventory.pEmpty() == false) {
-      if (name == "wheat" || name == "Wheat") {
-        if (inventory.getWheat() >= amount) {
-          int revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeWheat(-amount);
-          cout << "You have sold " << amount << " " << name << "for $"
-               << revenue << endl;
-        } else if (inventory.getWheat() > 0 && inventory.getWheat() < amount) {
-          sold = inventory.getWheat();
-          revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeWheat(-amount);
-          cout << "You have sold " << sold << " " << name << "for $" << revenue
-               << endl;
+      if (amount == 0 || inventory.getWheat() != 0 ||
+          inventory.getRice() != 0 || inventory.getRye() != 0 ||
+          inventory.getApple() != 0 || inventory.getPear() != 0 ||
+          inventory.getBanana() != 0) {
+        if (name == "wheat" || name == "Wheat") {
+          if (amount == 0 || inventory.getWheat() >= amount) {
+            inventory.changeFunds(revenue * amount);
+            inventory.changeWheat(-amount);
+            cout << "You have sold " << amount << " " << name << " for $"
+                 << (revenue * amount) << endl;
+          } else if (amount == 0 || (inventory.getWheat() > 0 &&
+                                     inventory.getWheat() < amount)) {
+            cout << "Not enough Wheat in Inventory to sell this many, selling "
+                    "all "
+                    "remaining: "
+                 << endl;
+            sold = inventory.getWheat();
+            inventory.changeWheat(-amount);
+            cout << "You have sold " << sold << " " << name << " for $"
+                 << (revenue * sold) << endl;
+            inventory.changeFunds(revenue * sold);
+          } else {
+            cout << "No Wheat in your Inventory to sell" << endl;
+          }
+        } else if (name == "rice" || name == "Rice") {
+          if (amount == 0 || inventory.getRice() >= amount) {
+            inventory.changeFunds(revenue * amount);
+            inventory.changeRice(-amount);
+            cout << "You have sold " << amount << " " << name << " for $"
+                 << (revenue * amount) << endl;
+          } else if (amount == 0 || (inventory.getRice() > 0 &&
+                                     inventory.getRice() < amount)) {
+            cout << "Not enough Rice in Inventory to sell this many, selling "
+                    "all "
+                    "remaining: "
+                 << endl;
+            sold = inventory.getRice();
+            inventory.changeRice(-amount);
+            cout << "You have sold " << sold << " " << name << " for $"
+                 << (revenue * sold) << endl;
+            inventory.changeFunds(revenue * sold);
+          } else {
+            cout << "No Rice in your Inventory to sell" << endl;
+          }
+        } else if (name == "rye" || name == "Rye") {
+          if (amount == 0 || inventory.getRye() >= amount) {
+            inventory.changeFunds(revenue * amount);
+            inventory.changeRye(-amount);
+            cout << "You have sold " << amount << " " << name << " for $"
+                 << (revenue * amount) << endl;
+          } else if (amount == 0 ||
+                     (inventory.getRye() > 0 && inventory.getRye() < amount)) {
+            cout
+                << "Not enough Rye in Inventory to sell this many, selling all "
+                   "remaining: "
+                << endl;
+            sold = inventory.getRye();
+            inventory.changeRye(-amount);
+            cout << "You have sold " << sold << " " << name << " for $"
+                 << (revenue * sold) << endl;
+            inventory.changeFunds(revenue * sold);
+          } else {
+            cout << "No Rye in your Inventory to sell" << endl;
+          }
+        } else if (name == "apple" || name == "Apple") {
+          if (amount == 0 || inventory.getApple() >= amount) {
+            inventory.changeFunds(revenue * amount);
+            inventory.changeApple(-amount);
+            if (amount == 1) {
+              cout << "You have sold " << amount << " " << name << " for $"
+                   << (revenue * amount) << endl;
+            } else {
+              cout << "You have sold " << amount << " " << name << "s for $"
+                   << (revenue * amount) << endl;
+            }
+          } else if (amount == 0 || (inventory.getApple() > 0 &&
+                                     inventory.getApple() < amount)) {
+            cout << "Not enough Apples in Inventory to sell this many, selling "
+                    "all remaining: "
+                 << endl;
+            sold = inventory.getApple();
+            inventory.changeApple(-amount);
+            if (sold == 1) {
+              cout << "You have sold " << sold << " " << name << " for $"
+                   << (revenue * sold) << endl;
+            } else {
+              cout << "You have sold " << sold << " " << name << "s for $"
+                   << (revenue * sold) << endl;
+            }
+            inventory.changeFunds(revenue * sold);
+          } else {
+            cout << "No Apples in your Inventory to sell" << endl;
+          }
+        } else if (name == "pear" || name == "Pear") {
+          if (amount == 0 || inventory.getPear() >= amount) {
+            inventory.changeFunds(revenue * amount);
+            inventory.changePear(-amount);
+            if (amount == 1) {
+              cout << "You have sold " << amount << " " << name << " for $"
+                   << (revenue * amount) << endl;
+            } else {
+              cout << "You have sold " << amount << " " << name << "s for $"
+                   << (revenue * amount) << endl;
+            }
+          } else if (amount == 0 || (inventory.getPear() > 0 &&
+                                     inventory.getPear() < amount)) {
+            cout << "Not enough Pears in Inventory to sell this many, selling "
+                    "all "
+                    "remaining: "
+                 << endl;
+            sold = inventory.getPear();
+            inventory.changePear(-amount);
+            if (sold == 1) {
+              cout << "You have sold " << sold << " " << name << " for $"
+                   << (revenue * sold) << endl;
+            } else {
+              cout << "You have sold " << sold << " " << name << "s for $"
+                   << (revenue * sold) << endl;
+            }
+            inventory.changeFunds(revenue * sold);
+          } else {
+            cout << "No Pears in your Inventory to sell" << endl;
+          }
+        } else if (name == "banana" || name == "Banana") {
+          if (amount == 0 || inventory.getBanana() >= amount) {
+            inventory.changeFunds(revenue * amount);
+            inventory.changeBanana(-amount);
+            if (amount == 1) {
+              cout << "You have sold " << amount << " " << name << " for $"
+                   << (revenue * amount) << endl;
+            } else {
+              cout << "You have sold " << amount << " " << name << "s for $"
+                   << (revenue * amount) << endl;
+            }
+          } else if (amount == 0 || (inventory.getBanana() > 0 &&
+                                     inventory.getBanana() < amount)) {
+            cout
+                << "Not enough Bananas in Inventory to sell this many, selling "
+                   "remaining: "
+                << endl;
+            sold = inventory.getBanana();
+            inventory.changeBanana(-amount);
+            if (sold == 1) {
+              cout << "You have sold " << sold << " " << name << " for $"
+                   << (revenue * sold) << endl;
+            } else {
+              cout << "You have sold " << sold << " " << name << "s for $"
+                   << (revenue * sold) << endl;
+            }
+            inventory.changeFunds(revenue * sold);
+          } else {
+            cout << "No Bananas in your Inventory to sell" << endl;
+          }
         }
-      } else if (name == "rice" || name == "Rice") {
-        if (inventory.getRice() >= amount) {
-          int revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeRice(-amount);
-          cout << "You have sold " << amount << " " << name << "for $"
-               << revenue << endl;
-        } else if (inventory.getRice() > 0 && inventory.getRice() < amount) {
-          sold = inventory.getRice();
-          revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeRice(-amount);
-          cout << "You have sold " << sold << " " << name << "for $" << revenue
-               << endl;
-        }
-      } else if (name == "rye" || name == "Rye") {
-        if (inventory.getRye() >= amount) {
-          int revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeRye(-amount);
-          cout << "You have sold " << amount << " " << name << "for $"
-               << revenue << endl;
-        } else if (inventory.getRye() > 0 && inventory.getRye() < amount) {
-          sold = inventory.getRye();
-          revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeRye(-amount);
-          cout << "You have sold " << sold << " " << name << "for $" << revenue
-               << endl;
-        }
-      } else if (name == "apple" || name == "Apple") {
-        if (inventory.getApple() >= amount) {
-          int revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeApple(-amount);
-          cout << "You have sold " << amount << " " << name << "for $"
-               << revenue << endl;
-        } else if (inventory.getApple() > 0 && inventory.getApple() < amount) {
-          sold = inventory.getApple();
-          revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeApple(-amount);
-          cout << "You have sold " << sold << " " << name << "for $" << revenue
-               << endl;
-        }
-      } else if (name == "pear" || name == "Pear") {
-        if (inventory.getPear() >= amount) {
-          int revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changePear(-amount);
-          cout << "You have sold " << amount << " " << name << "for $"
-               << revenue << endl;
-        } else if (inventory.getPear() > 0 && inventory.getPear() < amount) {
-          sold = inventory.getPear();
-          revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changePear(-amount);
-          cout << "You have sold " << sold << " " << name << "for $" << revenue
-               << endl;
-        }
-      } else if (name == "banana" || name == "Banana") {
-        if (inventory.getBanana() >= amount) {
-          int revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeBanana(-amount);
-          cout << "You have sold " << amount << " " << name << "for $"
-               << revenue << endl;
-        } else if (inventory.getBanana() > 0 &&
-                   inventory.getBanana() < amount) {
-          sold = inventory.getBanana();
-          revenue = revenueList[ID] * amount;
-          inventory.changeFunds(revenue);
-          inventory.changeBanana(-amount);
-          cout << "You have sold " << sold << " " << name << "for $" << revenue
-               << endl;
-        }
+      } else {
+        cout << "Unable to sell, Inventory Empty" << endl;
       }
     } else {
-      cout << "Unable to sell, Inventory Empty" << endl;
+      cout << "Invalid amount, must be greater than or equal to 0" << endl;
     }
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
@@ -180,16 +283,20 @@ void Shop::buyEquipment(Inventory &inventory, int ID) {
     int effect = effectList[ID];
 
     if (inventory.getFunds() >= cost) {
-      inventory.changeFunds((0 - cost));
       if (inventory.eFull() == false) {
+        inventory.changeFunds((0 - cost));
         inventory.addEquipment(new Equipment(eIDused, name, lifespan, effect));
-        cout << "You have bought a " << name << " for $" << cost << endl;
+        if (name == "fertiliser" || name == "Fertiliser") {
+          cout << "You have bought some " << name << " for $" << cost << endl;
+        } else {
+          cout << "You have bought a " << name << " for $" << cost << endl;
+        }
         eIDused = (eIDused + 1);
       } else {
-        cout << "Unable to buy equipment, Inventory Full" << endl;
+        cout << "Unable to buy " << name << ", Inventory Full" << endl;
       }
     } else {
-      cout << "Not enough funds to buy the equipment." << endl;
+      cout << "Not enough funds to buy" << name << "." << endl;
     }
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
@@ -210,12 +317,17 @@ void Shop::sellEquipment(Inventory &inventory, int mapID, int ID) {
       if (inventory.getEquipment().count(mapID) > 0) {
         inventory.removeEquipment(mapID);
         inventory.changeFunds(revenue);
-        cout << "You have sold a " << name << " for $" << revenue << endl;
+        if (name == "fertiliser" || name == "Fertiliser") {
+          cout << "You have sold some " << name << " for $" << revenue << endl;
+        } else {
+          cout << "You have sold a " << name << " for $" << revenue << endl;
+        }
       } else {
-        cout << "No item in your Inventory to sell." << endl;
+        cout << "No " << name << " with that ID in your Inventory to sell."
+             << endl;
       }
     } else {
-      cout << "Unable to sell item, Inventory Empty" << endl;
+      cout << "Unable to sell " << name << ", Inventory Empty" << endl;
     }
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
@@ -230,7 +342,7 @@ void Shop::openShop() {
     isOpen = true;
     cout << "Opening Shop: " << endl;
   } else if (exists == true && isOpen == true) {
-    cout << "Unable, shop already open";
+    cout << "Unable, shop already open" << endl;
   } else {
     cout << "Unable, Shop doesn't exist" << endl;
   }
@@ -248,4 +360,4 @@ void Shop::closeShop() {
 }
 
 // destructor deletes shop with message
-Shop::~Shop() { cout << "Shop was deleted"; }
+Shop::~Shop() { cout << "Shop was deleted" << endl; }
