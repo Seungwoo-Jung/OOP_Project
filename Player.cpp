@@ -29,10 +29,12 @@ int Player::Navigate(Inventory* inv, Shop* shop, Field* field) {
   validInput = false;
   bool done = false;
   while (validInput == false && done == false) {
+    cout << endl;
     cout << "What would you like to do? S: go to shop; F: go to field; I: open "
             "inventory; P: pass time; C: close program"
          << endl;
     cin >> input;
+    cout << endl;
     switch (input) {
       case 'S':
       case 's':
@@ -132,10 +134,12 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
     quantity = -1;
     ID = -1;
     species = -1;
+    cout << endl;
     cout << "What would you like to do? B: buy items; S: sell items; C: close "
             "shop"
          << endl;
     cin >> input;
+    cout << endl;
     switch (input) {
       case 'B':
       case 'b':
@@ -143,6 +147,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
         while (validInput == false) {
           cout << "Equipment or Plant? P: plant; E: equipment" << endl;
           cin >> type;
+          cout << endl;
           switch (type) {
             case 'e':
             case 'E':
@@ -160,6 +165,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
                               << std::endl;
                   }
                 }
+                cout << endl;
                 switch (ID) {
                   case 1:
                   case 2:
@@ -190,6 +196,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
                               << std::endl;
                   }
                 }
+                cout << endl;
                 if (quantity < 0) {
                   cout << "Invaid input, must be greater than or equal to 0"
                        << endl;
@@ -210,6 +217,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
                               << std::endl;
                   }
                 }
+                cout << endl;
                 switch (species) {
                   case 1:
                   case 2:
@@ -238,6 +246,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
         while (validInput == false) {
           cout << "Equipment or Plant? P: plant; E: equipment" << endl;
           cin >> type;
+          cout << endl;
           switch (type) {
             case 'e':
             case 'E':
@@ -256,6 +265,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
                                 << std::endl;
                     }
                   }
+                  cout << endl;
                   auto it = owned.find(ID);
                   if (it != owned.end()) {
                     string name = owned[ID]->getName();
@@ -294,6 +304,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
                               << std::endl;
                   }
                 }
+                cout << endl;
                 if (quantity < 0) {
                   cout << "Invaid input, must be greater than or equal to 0"
                        << endl;
@@ -314,6 +325,7 @@ void Player::shopAction(Shop* shop, Inventory& inv) {
                               << std::endl;
                   }
                 }
+                cout << endl;
                 switch (species) {
                   case 1:
                   case 2:
@@ -360,11 +372,13 @@ void Player::invAction(Inventory* inv) {
     equipment = inv->getEquipment();
     input = '0';
     ID = -1;
+    cout << endl;
     cout << "What would you like to do? V: view contents; E: equip item; R: "
             "remove Equipment; C: "
             "close inventory"
          << endl;
     cin >> input;
+    cout << endl;
     switch (input) {
       case 'v':
       case 'V':
@@ -385,6 +399,7 @@ void Player::invAction(Inventory* inv) {
                         << std::endl;
             }
           }
+          cout << endl;
           inv->removeEquipment(ID);
         } else {
           cout << "No Equipment in inventory" << endl;
@@ -405,6 +420,7 @@ void Player::invAction(Inventory* inv) {
                         << std::endl;
             }
           }
+          cout << endl;
           auto it = equipment.find(ID);
           if (it != equipment.end()) {
             for (auto& pair : equipment) {
@@ -449,10 +465,12 @@ void Player::fieldAction(Field* field, Inventory* inv) {
     ID = -1;
     input = '0';
     p1 = nullptr;
+    cout << endl;
     cout << "What would you like to do? A: add plant; H: harvest plant; R: "
             "remove plant; W: water plant; G: get contents; C: close field;"
          << endl;
     cin >> input;
+    cout << endl;
     switch (input) {
       case 'a':
       case 'A':
@@ -470,6 +488,7 @@ void Player::fieldAction(Field* field, Inventory* inv) {
                           << std::endl;
               }
             }
+            cout << endl;
             for (auto& pair : plants) {
               if (pair.second->getID() == ID) {
                 p1 = pair.second;
@@ -521,6 +540,7 @@ void Player::fieldAction(Field* field, Inventory* inv) {
                         << std::endl;
             }
           }
+          cout << endl;
           for (i = 0; i < field->get_sizeM(); i++) {
             for (j = 0; j < field->get_sizeN(); j++) {
               int plantID = -1;
@@ -582,6 +602,7 @@ void Player::fieldAction(Field* field, Inventory* inv) {
                         << std::endl;
             }
           }
+          cout << endl;
           for (i = 0; i < field->get_sizeM(); i++) {
             for (j = 0; j < field->get_sizeN(); j++) {
               int plantID = -1;
@@ -645,6 +666,7 @@ void Player::fieldAction(Field* field, Inventory* inv) {
                         << std::endl;
             }
           }
+          cout << endl;
           if (ID != 0) {
             for (i = 0; i < field->get_sizeM(); i++) {
               for (j = 0; j < field->get_sizeN(); j++) {
