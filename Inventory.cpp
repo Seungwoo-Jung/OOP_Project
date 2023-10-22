@@ -38,13 +38,13 @@ Inventory::Inventory(int p, int e) {
   exists = true;
   plantCapacity = p;
   equipmentCapacity = e;
-  funds = 0;
-  wheat = 0;
-  rice = 0;
-  rye = 0;
-  apple = 0;
-  banana = 0;
-  pear = 0;
+  funds = 200;
+  wheat = 10;
+  rice = 10;
+  rye = 10;
+  apple = 10;
+  banana = 10;
+  pear = 10;
   plantFull = false;
   equipFull = false;
   plantEmpty = true;
@@ -106,6 +106,15 @@ unordered_map<int, Equipment*> Inventory::getEquipment() {
     cout << "Unable, Inventory does not exist" << endl;
   }
 }
+
+// returns the plant map for different classes
+unordered_map<int, Plant*> Inventory::getPlants() {
+  if (exists == true) {
+    return plantInventory;
+  } else {
+    cout << "Unable, Inventory does not exist" << endl;
+  }
+};
 
 // following 3 functions open/close/return the current status (open or closed)
 // of the inventory, and calls the getContents function if opening. Only
@@ -422,4 +431,5 @@ Inventory::~Inventory() {
   for (auto& pair : equipInventory) {
     delete pair.second;
   }
+  cout << "Inventory was deleted" << endl;
 };

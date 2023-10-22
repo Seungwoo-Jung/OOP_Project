@@ -27,5 +27,8 @@ int Item::getID() const { return ID; }
 // returns the item name for reference
 string Item::getName() { return name; }
 
+// returns the
+string Item::getStat() { return status; }
+
 // empty destructor
 Item::~Item() {}

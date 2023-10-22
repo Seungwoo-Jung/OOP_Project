@@ -74,15 +74,17 @@ void Grain::plantGrow(int setGrowthRate) {
 // the status as dead and returns the yield, provided the plant is mature or
 // declining If the plant is harvested early it will return nothing
 int Grain::plantHarvest() {
-  if (status != "dead") {
-    status = "dead";
-    if (status == "dead") {
-      water = 0;
-    }
+  if (status != "dead" && status != "null") {
+    water = 0;
     if (status != "growing") {
+      cout << " A Yield of " << yield << " " << name << " was received."
+           << endl;
       return yield;
     }
+    status = "dead";
+  } else {
   }
+  cout << "No " << name << " received, plant is dead." << endl;
   return 0;
 }
 
@@ -91,12 +93,14 @@ int Grain::plantHarvest() {
 // growing/mature depending on the age of the plant if it was declining from a
 // lack of water.
 void Grain::plantWater() {
-  water = 100;
-  double result = (age / lifespan);
-  if (water > 40 && result <= 0.5) {
-    status = "growing";
-  } else if (water > 40 && result <= 0.75) {
-    status = "mature";
+  if (status != "dead" && status != "null") {
+    water = 100;
+    double result = (age / lifespan);
+    if (water > 40 && result <= 0.5) {
+      status = "growing";
+    } else if (water > 40 && result <= 0.75) {
+      status = "mature";
+    }
   }
 }
 

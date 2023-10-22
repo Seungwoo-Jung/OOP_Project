@@ -17,6 +17,7 @@ class Equipment : public Item {
   Equipment(int ID, string name, int lifespan, int effect);
   ~Equipment();
   void getStatus() override;
+  int getEffect();
   bool itemEquipped();
   void equip();
   void unequip();

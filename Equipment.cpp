@@ -48,6 +48,9 @@ void Equipment::getStatus() {
   cout << "Current status: " << status << "." << endl;
 }
 
+// returns the effect of the equipment for reference
+int Equipment::getEffect() { return effect; }
+
 // itemEquipped function returns the equip status of the item
 bool Equipment::itemEquipped() { return equipped; }
 
@@ -55,6 +58,7 @@ bool Equipment::itemEquipped() { return equipped; }
 void Equipment::equip() {
   if (status != "null") {
     equipped = true;
+    cout << name << " with ID " << ID << "equipped" << endl;
   }
 }
 
@@ -74,10 +78,13 @@ int Equipment::use() {
   if (equipped == true && currentUses <= lifespan) {
     if (status != "broken") {
       currentUses = currentUses + 1;
-      cout << "Uses: " << currentUses << " out of " << lifespan << "." << endl;
+      cout << name << " with ID " << ID << "was used." << endl;
+      cout << "Current uses: " << currentUses << " out of " << lifespan << "."
+           << endl;
       if (currentUses == lifespan) {
         status = "broken";
       }
+      cout << "status: " << status << "." << endl;
     }
     return effect;
   } else {

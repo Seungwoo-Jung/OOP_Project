@@ -20,6 +20,7 @@ class Item {
   virtual void getStatus() = 0;
   int getID() const;
   string getName();
+  string getStat();
   virtual ~Item();
 };
 

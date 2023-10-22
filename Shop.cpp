@@ -46,8 +46,8 @@ void Shop::buyPlant(Inventory &inventory, int amount, int ID) {
       int value = IDused;
 
       for (int i = value; i < (value + amount); i++) {
-        if (amount == 0 || inventory.getFunds() >= cost) {
-          if (amount == 0 || inventory.pFull() == false) {
+        if (amount == 0 || inventory.pFull() == false) {
+          if (amount == 0 || inventory.getFunds() >= cost) {
             if (name == "Rye" || name == "rye" || name == "Rice" ||
                 name == "rice" || name == "wheat" || name == "Wheat") {
               inventory.addPlant(new Grain(IDused, name, lifespan, yield));
@@ -57,13 +57,27 @@ void Shop::buyPlant(Inventory &inventory, int amount, int ID) {
             }
             IDused = IDused + 1;
             bought = (bought + 1);
-            cost = (priceList[ID] * bought);
             inventory.changeFunds((0 - cost));
           } else {
-            cout << "Unable to buy " << name << ", Inventory Full" << endl;
+            if (name == "Rye" || name == "rye" || name == "Rice" ||
+                name == "rice" || name == "wheat" || name == "Wheat") {
+              cout << "Not enough funds to buy more " << name << "." << endl;
+            } else if (name == "apple" || name == "Apple" || name == "Pear" ||
+                       name == "pear" || name == "banana" || name == "Banana") {
+              cout << "Not enough funds to buy more " << name << "s." << endl;
+            }
+            break;
           }
         } else {
-          cout << "Not enough funds to buy " << name << "." << endl;
+          if (name == "Rye" || name == "rye" || name == "Rice" ||
+              name == "rice" || name == "wheat" || name == "Wheat") {
+            cout << "Unable to buy more " << name << ", Inventory Full" << endl;
+          } else if (name == "apple" || name == "Apple" || name == "Pear" ||
+                     name == "pear" || name == "banana" || name == "Banana") {
+            cout << "Unable to buy more " << name << "s, Inventory Full"
+                 << endl;
+          }
+          break;
         }
       }
       cost = (priceList[ID] * bought);
@@ -296,7 +310,7 @@ void Shop::buyEquipment(Inventory &inventory, int ID) {
         cout << "Unable to buy " << name << ", Inventory Full" << endl;
       }
     } else {
-      cout << "Not enough funds to buy" << name << "." << endl;
+      cout << "Not enough funds to buy " << name << "." << endl;
     }
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
@@ -305,29 +319,42 @@ void Shop::buyEquipment(Inventory &inventory, int ID) {
   }
 }
 
-// sells equipment. Unlike selling plants, this remov3es the object from your
+// sells equipment. Unlike selling plants, this removes the object from your
 // inventory directly, using it's identifier to do so. Only works if the object
 // exists in the inventory, and the shop is both open and exists
-void Shop::sellEquipment(Inventory &inventory, int mapID, int ID) {
+void Shop::sellEquipment(Inventory &inventory, Equipment *e1, int ID) {
   if (exists == true && isOpen == true) {
     int revenue = erevenueList[ID];
     string name = enameList[ID];
 
     if (inventory.eEmpty() == false) {
-      if (inventory.getEquipment().count(mapID) > 0) {
-        inventory.removeEquipment(mapID);
-        inventory.changeFunds(revenue);
-        if (name == "fertiliser" || name == "Fertiliser") {
-          cout << "You have sold some " << name << " for $" << revenue << endl;
+      if (e1->getStat() != "broken") {
+        if (inventory.getEquipment().count(e1->getID()) > 0) {
+          inventory.removeEquipment(e1->getID());
+          inventory.changeFunds(revenue);
+          if (name == "fertiliser" || name == "Fertiliser") {
+            cout << "You have sold some " << name << " for $" << revenue
+                 << endl;
+          } else {
+            cout << "You have sold a " << name << " for $" << revenue << endl;
+          }
         } else {
-          cout << "You have sold a " << name << " for $" << revenue << endl;
+          cout << "No " << name << " with that ID in your Inventory to sell."
+               << endl;
         }
       } else {
-        cout << "No " << name << " with that ID in your Inventory to sell."
-             << endl;
+        revenue = 0;
+        if (name == "fertiliser" || name == "Fertiliser") {
+          cout << "You have sold the" << name << " for $" << revenue
+               << ", as it has been used." << endl;
+        } else {
+          cout << "You have sold a " << name << " for $" << revenue
+               << ", as it is broken." << endl;
+        }
+        inventory.removeEquipment(e1->getID());
       }
     } else {
-      cout << "Unable to sell " << name << ", Inventory Empty" << endl;
+      cout << "Unable to sell, Inventory Empty" << endl;
     }
   } else if (exists == true && isOpen != true) {
     cout << "Unable, Shop is not open" << endl;
