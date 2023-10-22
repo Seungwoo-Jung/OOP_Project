@@ -63,6 +63,10 @@ void Equipment::equip() {
     if (equipped != true) {
       equipped = true;
       cout << name << " with ID " << ID << " equipped" << endl;
+    } else if (status == "broken") {
+      cout << "Unable to equip broken " << name << endl;
+    } else if (status == "empty") {
+      cout << "Unable to equip empty " << name << endl;
     } else {
       cout << "This item is already equipped" << endl;
     }
@@ -99,9 +103,10 @@ int Equipment::use() {
         }
       }
       cout << "status: " << status << "." << endl;
-      if (status == "broken" || status == "empty") {
-        effect = 1;
-      }
+    }
+    if (status == "broken" || status == "empty") {
+      unequip();
+      effect = 1;
     }
     return effect;
   } else {

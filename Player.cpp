@@ -32,7 +32,7 @@ int Player::Navigate(Inventory* inv, Shop* shop, Field* field) {
   bool done = false;
   while (validInput == false && done == false) {
     cout << "What would you like to do? S: go to shop; F: go to field; I: open "
-            "inventory; C: close program"
+            "inventory; P: pass time; C: close program"
          << endl;
     cin >> input;
     switch (input) {
@@ -50,6 +50,10 @@ int Player::Navigate(Inventory* inv, Shop* shop, Field* field) {
       case 'F':
         field->openField();
         fieldAction(field, inv);
+        break;
+      case 'p':
+      case 'P':
+        passTime(field, inv);
         break;
       case 'c':
       case 'C':
