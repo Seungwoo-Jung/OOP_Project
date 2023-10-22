@@ -21,61 +21,60 @@ WINDOW *dispCreateField(Field &field){
 
     WINDOW *windowField;
 
-  int windowY = field.get_sizeM() + 2;
-  int windowX = (3 * (field.get_sizeN())) + 4;
+    int windowY = field.get_sizeM() + 2;
+    int windowX = (3 * (field.get_sizeN())) + 4;
 
-  windowField = newwin(windowY, windowX, (getmaxy(stdscr) - windowY) / 2,
-                       (getmaxx(stdscr) - windowX) / 2);
+    windowField = newwin(windowY, windowX, (getmaxy(stdscr) - windowY) / 2, (getmaxx(stdscr) - windowX) / 2);
 
-  refresh();
+    refresh();
 
-  box(windowField, 0, 0);
+    box(windowField, 0, 0);
 
-  mvwprintw(windowField, 0, 1, "Field");
+    mvwprintw(windowField, 0, 1, "Field");
 
-  for (int i = 1; i < windowY - 1; i++) {
-    for (int j = 1; j < windowX - 1; j++) {
-      if (j % 3 == 0) {
-        // attron(COLOR_PAIR(1));
-        mvwaddch(windowField, i, j, '=');
-        // attroff(COLOR_PAIR(1));
-      } else {
-        // attron(COLOR_PAIR(2));
-        mvwaddch(windowField, i, j, '.');
-        // attroff(COLOR_PAIR(2));
-      }
+    for (int i = 1; i < windowY - 1; i++) {
+        for (int j = 1; j < windowX - 1; j++) {
+        if (j % 3 == 0) {
+            // attron(COLOR_PAIR(1));
+            mvwaddch(windowField, i, j, '=');
+            // attroff(COLOR_PAIR(1));
+        } else {
+            // attron(COLOR_PAIR(2));
+            mvwaddch(windowField, i, j, '.');
+            // attroff(COLOR_PAIR(2));
+        }
+        }
     }
-  }
 
-  wrefresh(windowField);
+    wrefresh(windowField);
 
-  return windowField;
+    return windowField;
 }
 
 void dispFieldUpdate(WINDOW *window, Field field) {
-  for (int i = 0; i < field.get_sizeM(); i++) {
-    for (int j = 0; j < field.get_sizeN(); j++) {
-      if (field.get_plant(i, j) != 0) {
-        mvwaddch(window, i + 1, (j + 1) * 3, '#');
-      } else {
-        mvwaddch(window, i + 1, (j + 1) * 3, '=');
-      }
+    for (int i = 0; i < field.get_sizeM(); i++) {
+        for (int j = 0; j < field.get_sizeN(); j++) {
+            if (field.get_plant(i, j) != 0) {
+                mvwaddch(window, i + 1, (j + 1) * 3, '#');
+            } else {
+                mvwaddch(window, i + 1, (j + 1) * 3, '=');
+            }
+        }
     }
-  }
 
-  wrefresh(window);
+    wrefresh(window);
 }
 
 int main() {
-  initscr();
-  noecho();
-  keypad(stdscr, true);
-  // start_color();
+    initscr();
+    noecho();
+    keypad(stdscr, true);
+    // start_color();
 
-  // Defining colours //
-  // init_pair(1, COLOR_RED, COLOR_BLACK);
-  // init_pair(2, COLOR_WHITE, COLOR_BLACK);
-  // init_pair(3, COLOR_GREEN, COLOR_BLACK);
+    // Defining colours //
+    // init_pair(1, COLOR_RED, COLOR_BLACK);
+    // init_pair(2, COLOR_WHITE, COLOR_BLACK);
+    // init_pair(3, COLOR_GREEN, COLOR_BLACK);
 
     std::string titleStrings[] = {
         "The Farming Game", 
@@ -158,50 +157,42 @@ int main() {
     MENU *menu;
     WINDOW *menuWindow;
 
-  menu = new_menu(menuItems);
-  menuWindow = newwin(10, 50, 0, 0);
-  keypad(menuWindow, true);
+    menu = new_menu(menuItems);
+    menuWindow = newwin(10, 50, 0, 0);
+    keypad(menuWindow, true);
 
-  set_menu_win(menu, menuWindow);
-  set_menu_sub(menu, derwin(menuWindow, 8, 40, 1, 1));
+    set_menu_win(menu, menuWindow);
+    set_menu_sub(menu, derwin(menuWindow, 8, 40, 1, 1));
 
-  box(menuWindow, 0, 0);
+    box(menuWindow, 0, 0);
 
-  post_menu(menu);
+    post_menu(menu);
 
-  wrefresh(menuWindow);
-
-  getch();
-
-  // Grain grain(0, "Wheat", 5, 10);
-
-  // field.set_plant(&grain, 1, 1);
-
-  // dispFieldUpdate(window, field);
-
-  getch();
-
-  int c;
-
-  while ((c = wgetch(menuWindow)) != KEY_BACKSPACE) {
-    switch (c) {
-      case KEY_DOWN:
-        menu_driver(menu, REQ_DOWN_ITEM);
-        break;
-      case KEY_UP:
-        menu_driver(menu, REQ_UP_ITEM);
-        break;
-    }
     wrefresh(menuWindow);
-  }
 
-  unpost_menu(menu);
-  free_menu(menu);
+    getch();
 
-  for (int i = 0; i < 5; i++) {
-    free_item(menuItems[i]);
-  }
+    int c;
 
-  endwin();
-  return 0;
+    while ((c = wgetch(menuWindow)) != KEY_BACKSPACE) {
+        switch (c) {
+        case KEY_DOWN:
+            menu_driver(menu, REQ_DOWN_ITEM);
+            break;
+        case KEY_UP:
+            menu_driver(menu, REQ_UP_ITEM);
+            break;
+        }
+        wrefresh(menuWindow);
+    }
+
+    unpost_menu(menu);
+    free_menu(menu);
+
+    for (int i = 0; i < 5; i++) {
+        free_item(menuItems[i]);
+    }
+
+    endwin();
+    return 0;
 }
