@@ -26,8 +26,8 @@ Fruit::Fruit(int ID, string name, int life, int setRate)
   productionTracker = -1;
 }
 
-// the destructor prints out a message detailing the deletion
-Fruit::~Fruit() { cout << name << " with ID " << ID << " was deleted" << endl; }
+// destructor
+Fruit::~Fruit() {}
 
 // the plantGrow function has multiple parts to manage the growth of the plant.
 // Nothing at all will occur if the pant is not alive or does not exist
@@ -46,7 +46,6 @@ void Fruit::plantGrow(int setGrowthRate) {
       water = water - 5;
     } else if (status == "mature" && age < lifespan && water > 0) {
       age = age + 1;
-      water = water - 5;
     } else if (status == "declining" && age < lifespan && water > 0) {
       age = age + (static_cast<double>(1) / growthRate);
       water = water - 5;
@@ -109,12 +108,18 @@ void Fruit::plantGrow(int setGrowthRate) {
 // fruit trees are not kiled when being harvested so the status remains the same
 int Fruit::plantHarvest() {
   if (status != "dead" && status != "null") {
-    int yield = currentFruit;
-    currentFruit = 0;
-    cout << " A Yield of " << yield << " " << name << " was received." << endl;
-    return yield;
+    if (currentFruit == -1) {
+      cout << "A Yield of 0 " << name << "s was received." << endl;
+      return 0;
+    } else {
+      int yield = currentFruit;
+      cout << "A Yield of " << yield << " " << name << "s was received."
+           << endl;
+      currentFruit = 0;
+      return yield;
+    }
   } else {
-    cout << "No " << name << " received, plant is dead." << endl;
+    cout << "No " << name << "s received, plant is dead." << endl;
   }
   return 0;
 }
@@ -141,13 +146,21 @@ void Fruit::plantWater() {
 void Fruit::getStatus() {
   cout << "Plant of type Fruit, species " << name << " with ID " << ID
        << ". Age is " << age << " out of " << lifespan
-       << " lifespan. Produces 1 fruit per " << productionRate << " days. "
-       << "Current status: " << status << ", with growth rate " << growthRate
-       << ", " << water << "% water and ";
-  if (currentFruit == -1) {
-    cout << "0";
-  } else {
-    cout << currentFruit;
+       << " lifespan. Produces 1 fruit per " << productionRate
+       << " days once mature. ";
+  if (isPlanted == false) {
+    cout << endl;
+  } else if (isPlanted == true) {
+    cout << "Current status: " << status << ", with growth rate " << growthRate
+         << ", " << water << "% water and ";
+    if (currentFruit == -1) {
+      cout << "0";
+    } else {
+      cout << currentFruit;
+    }
+    cout << " fruit." << endl;
   }
-  cout << " fruit." << endl;
 }
+
+// sets the isPlanted value to be true, so status will print out growth state
+void Fruit::planted() { isPlanted = true; }

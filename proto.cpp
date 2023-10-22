@@ -15,7 +15,7 @@
 
 int main() {
   Player* player = new Player();
-  Inventory* inv = new Inventory(7, 7);
+  Inventory* inv = new Inventory(10, 4);
   Field* field = new Field(5, 5);
   Shop* shop = new Shop();
   player->Navigate(inv, shop, field);

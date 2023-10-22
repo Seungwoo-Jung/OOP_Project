@@ -11,6 +11,7 @@ class Plant : public Item {
   double age;
   double water;
   int growthRate;
+  bool isPlanted;
 
  public:
   Plant();
@@ -19,6 +20,7 @@ class Plant : public Item {
   virtual int plantHarvest();
   virtual void plantWater();
   virtual void getStatus();
+  virtual void planted();
   int getRate();
   void setRate(int rate);
   virtual ~Plant();
