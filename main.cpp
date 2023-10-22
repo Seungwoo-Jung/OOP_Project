@@ -12,7 +12,7 @@
 #include <menu.h>
 #include <iostream>
 
-WINDOW *dispCreateField(Field field){
+WINDOW *dispCreateField(Field &field){
 
     WINDOW *windowField;
 
@@ -72,20 +72,86 @@ int main() {
     // init_pair(2, COLOR_WHITE, COLOR_BLACK);
     // init_pair(3, COLOR_GREEN, COLOR_BLACK);
 
-    Field field(5, 6);
-    WINDOW *window;
+    std::string titleStrings[] = {
+        "The Farming Game", 
+        "Press any key to continue", 
+        "Field Creation", 
+        "Enter desired rows: ", 
+        "Enter desired columns: "
+    };
 
-    window = dispCreateField(field);
+    mvprintw((getmaxy(stdscr) / 2) - 1, (getmaxx(stdscr) - titleStrings[0].length()) / 2, "%s", titleStrings[0].c_str());
+    mvprintw((getmaxy(stdscr) / 2) + 1, (getmaxx(stdscr) - titleStrings[1].length()) / 2, "%s", titleStrings[1].c_str());
 
-    ITEM **menuItems;
-    MENU *menu;
-    WINDOW *menuWindow;
+    refresh();
 
-    const char *menuChoices[5] = {"Choice 1", "Choice 2", "Choice 3", "Choice 4", "Exit"};
+    getch();
 
-    for (int i = 0; i < 5; i++){
+    clear();
+
+    int fieldrows, fieldcolumns;
+
+    mvprintw((getmaxy(stdscr) / 2) - 2, (getmaxx(stdscr) - titleStrings[2].length()) / 2, "%s", titleStrings[2].c_str());
+    mvprintw((getmaxy(stdscr) / 2), (getmaxx(stdscr) - titleStrings[3].length()) / 2, "%s", titleStrings[3].c_str());
+
+    refresh();
+
+    echo();
+
+    int posY, posX;
+    getyx(stdscr, posY, posX);
+
+    while (true){
+        move(posY, posX);
+        fieldrows = getch();
+        if (fieldrows > 57 || fieldrows < 49){
+            std::string badInput = "Invalid input. Please enter a number within the range 1-9";
+            mvprintw((getmaxy(stdscr) / 2) + 3, (getmaxx(stdscr) - badInput.length()) / 2, "%s", badInput.c_str());
+            refresh();
+        } else {
+            break;
+        }
+    }
+
+    refresh();
+
+    mvprintw((getmaxy(stdscr) / 2) + 1, (getmaxx(stdscr) - titleStrings[4].length()) / 2, "%s", titleStrings[4].c_str());
+
+    getyx(stdscr, posY, posX);
+
+    while (true){
+        move(posY, posX);
+        fieldcolumns = getch();
+        if (fieldcolumns > 57 || fieldcolumns < 49){
+            std::string badInput = "Invalid input. Please enter a number within the range 1-9";
+            mvprintw((getmaxy(stdscr) / 2) + 3, (getmaxx(stdscr) - badInput.length()) / 2, "%s", badInput.c_str());
+            refresh();
+        } else {
+            break;
+        }
+    }
+
+    noecho();
+
+    refresh();
+
+    clear();
+
+    Field field(fieldrows - 48, fieldcolumns - 48);
+    WINDOW *fieldWindow;
+
+    fieldWindow = dispCreateField(field);
+
+    const char *menuChoices[] = {"Choice 1", "Choice 2", "Choice 3", "Choice 4", "Exit"};
+    int itemCount = sizeof(menuChoices) / sizeof(menuChoices[0]);
+    ITEM **menuItems = (ITEM **)calloc(itemCount + 1, sizeof(ITEM *));
+
+    for (int i = 0; i < itemCount; i++){
         menuItems[i] = new_item(menuChoices[i], menuChoices[i]);
     }
+
+    MENU *menu;
+    WINDOW *menuWindow;
 
     menu = new_menu(menuItems);
     menuWindow = newwin(10, 50, 0, 0);
