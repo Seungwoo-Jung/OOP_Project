@@ -29,10 +29,8 @@ Equipment::Equipment(int setID, string setName, int totalUses, int impact)
   }
 };
 
-// destructor prints out message detailing deletion
-Equipment::~Equipment() {
-  cout << "Equipment with ID " << ID << " was deleted." << endl;
-}
+// destructor
+Equipment::~Equipment() {}
 
 // getStatus function prints out information about the item, including it's
 // name, ID, current amount of uses, and lifespan. it then prints out the equip

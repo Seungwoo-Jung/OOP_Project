@@ -54,7 +54,7 @@ Inventory::Inventory(int p, int e) {
   addPlant(new Fruit(1, "Apple", 50, 2));
   addPlant(new Grain(2, "Wheat", 20, 10));
   addPlant(new Grain(3, "Rice", 20, 15));
-  addEquipment(new Equipment(4, "Shovel", 50, 1));
+  addEquipment(new Equipment(1, "Shovel", 50, 1));
 
   isOpen = false;
 }

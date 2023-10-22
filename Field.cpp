@@ -44,13 +44,13 @@ Field::Field(int size_row, int size_column) {
 // adds a plant into the position on the field
 void Field::set_plant(Plant* plant, int row, int column) {
   fieldMatrix[row][column] = plant;
+  fieldMatrix[row][column]->planted();
 }
 
 // emoves a plant from that position on the field, after harvesting and deleting
 // it and deletes the object
 void Field::remove_plant(int row, int column) {
   // fieldMatrix[row].erase(fieldMatrix[row].begin() + column);
-  fieldMatrix[row][column]->plantHarvest();
   delete fieldMatrix[row][column];
   fieldMatrix[row][column] = nullptr;
 }
@@ -104,6 +104,7 @@ void Field::getContents() {
     for (i = 0; i < fieldSizeM; i++) {
       for (j = 0; j < fieldSizeN; j++) {
         if (fieldMatrix[i][j] != nullptr) {
+          cout << "Plant in position " << i << "," << j << ":" << endl;
           fieldMatrix[i][j]->getStatus();
         }
       }

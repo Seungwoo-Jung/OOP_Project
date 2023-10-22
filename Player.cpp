@@ -17,8 +17,6 @@ using namespace std;
 
 // default constructor
 Player::Player() {
-  cout << "Enter numbers to create your userID: " << endl;
-  cin >> userID;
   timepassed = 0;
   validInput = false;
   done = false;
@@ -446,63 +444,122 @@ void Player::fieldAction(Field* field, Inventory* inv) {
   int ID = -1, i = 0, j = 0;
   Plant* p1 = nullptr;
   while (done == false) {
+    plants = inv->getPlants();
+    matrix = field->getField();
+    ID = -1;
     input = '0';
     p1 = nullptr;
     cout << "What would you like to do? A: add plant; H: harvest plant; R: "
-            "remove plant; G: get contents; C: close field;"
+            "remove plant; W: water plant; G: get contents; C: close field;"
          << endl;
     cin >> input;
     switch (input) {
       case 'a':
       case 'A':
-        cout << "Enter the ID of the Plant you want to Add:" << endl;
-        cin >> ID;
-        for (auto& pair : plants) {
-          if (pair.second->getID() == ID) {
-            p1 = pair.second;
-            break;
-          }
-        }
-        if (p1 != nullptr) {
-          if (field->Full() == false) {
-            for (i = 0; i < field->get_sizeM(); i++) {
-              for (j = 0; j < field->get_sizeN(); j++) {
-                if (matrix[i][j] == nullptr) {
-                  field->set_plant(p1, i, j);
-                  cout << "Plant with ID " << p1->getID() << " and name "
-                       << p1->getName() << " added to position " << i << ","
-                       << j << "." << endl;
+        if (field->Full() == false) {
+          if (!plants.empty()) {
+            cout << "Enter the ID of the Plant you want to Add:" << endl;
+            while (true) {
+              if (std::cin >> ID) {
+                break;
+              } else {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                                '\n');
+                std::cout << "Invalid input. Please enter an integer."
+                          << std::endl;
+              }
+            }
+            for (auto& pair : plants) {
+              if (pair.second->getID() == ID) {
+                p1 = pair.second;
+                break;
+              }
+            }
+            if (p1 != nullptr) {
+              bool found = false;
+              for (i = 0; i < field->get_sizeM(); i++) {
+                for (j = 0; j < field->get_sizeN(); j++) {
+                  if (matrix[i][j] == nullptr) {
+                    field->set_plant(p1, i, j);
+                    cout << "Plant with ID " << p1->getID() << " and name "
+                         << p1->getName() << " added to position " << i << ","
+                         << j << " of the field." << endl;
+                    inv->removePlant(ID);
+                    found = true;
+                    break;
+                  }
+                }
+                if (found == true) {
                   break;
                 }
               }
+            } else {
+              cout << "Plant not found in Inventory" << endl;
             }
           } else {
-            cout << "Unable to add plant, Field is full" << endl;
+            cout << "No plants in Inventory" << endl;
           }
         } else {
-          cout << "Plant not found in Inventory" << endl;
+          cout << "Unable to add plant, Field is full" << endl;
         }
         break;
 
       case 'h':
       case 'H':
-        cout << "Enter the ID of the Plant you want to Harvest:" << endl;
-        cin >> ID;
         if (field->Empty() == false) {
+          bool found = false;
+          cout << "Enter the ID of the Plant you want to Harvest:" << endl;
+          while (true) {
+            if (std::cin >> ID) {
+              break;
+            } else {
+              std::cin.clear();
+              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                              '\n');
+              std::cout << "Invalid input. Please enter an integer."
+                        << std::endl;
+            }
+          }
           for (i = 0; i < field->get_sizeM(); i++) {
             for (j = 0; j < field->get_sizeN(); j++) {
+              int plantID = -1;
               if (matrix[i][j] != nullptr) {
-                int plantID = matrix[i][j]->getID();
-                if (plantID == ID) {
-                  cout << "Plant in position " << i << "," << j
-                       << " was harvested." << endl;
-                  matrix[i][j]->plantHarvest();
-                } else if (plantID != ID && i == field->get_sizeM() &&
-                           j == field->get_sizeN()) {
-                  cout << "Plant not found on the field" << endl;
+                plantID = matrix[i][j]->getID();
+              }
+              if (plantID == ID) {
+                cout << "Plant in position " << i << "," << j
+                     << " was harvested." << endl;
+                int yield = matrix[i][j]->plantHarvest();
+                if (matrix[i][j]->getName() == "wheat" ||
+                    matrix[i][j]->getName() == "Wheat") {
+                  inv->changeWheat(yield);
+                } else if (matrix[i][j]->getName() == "rice" ||
+                           matrix[i][j]->getName() == "Rice") {
+                  inv->changeRice(yield);
+                } else if (matrix[i][j]->getName() == "rye" ||
+                           matrix[i][j]->getName() == "Rye") {
+                  inv->changeRye(yield);
+                } else if (matrix[i][j]->getName() == "apple" ||
+                           matrix[i][j]->getName() == "Apple") {
+                  inv->changeApple(yield);
+                } else if (matrix[i][j]->getName() == "pear" ||
+                           matrix[i][j]->getName() == "Pear") {
+                  inv->changePear(yield);
+                } else if (matrix[i][j]->getName() == "banana" ||
+                           matrix[i][j]->getName() == "Banana") {
+                  inv->changeBanana(yield);
                 }
+                if (matrix[i][j]->getStat() == "dead") {
+                  cout << "Removing harvested grain" << endl;
+                  field->remove_plant(i, j);
+                }
+                found = true;
               }
             }
+          }
+          if (found == false) {
+            cout << "Plant not found on the field" << endl;
           }
         } else {
           cout << "Nothing to Harvest, Field is empty" << endl;
@@ -511,34 +568,116 @@ void Player::fieldAction(Field* field, Inventory* inv) {
 
       case 'r':
       case 'R':
-        cout << "Enter the ID of the Plant you want to remove:" << endl;
-        cin >> ID;
         if (field->Empty() == false) {
+          bool found = false;
+          cout << "Enter the ID of the Plant you want to remove:" << endl;
+          while (true) {
+            if (std::cin >> ID) {
+              break;
+            } else {
+              std::cin.clear();
+              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                              '\n');
+              std::cout << "Invalid input. Please enter an integer."
+                        << std::endl;
+            }
+          }
           for (i = 0; i < field->get_sizeM(); i++) {
             for (j = 0; j < field->get_sizeN(); j++) {
+              int plantID = -1;
               if (matrix[i][j] != nullptr) {
-                int plantID = matrix[i][j]->getID();
-                if (plantID == ID) {
-                  cout << "Plant in position " << i << "," << j
-                       << " was removed." << endl;
-                  matrix[i][j]->plantHarvest();
-                  if (matrix[i][j]->getStat() == "dead") {
-                    cout << "Removing plant, as it is dead " << endl;
-                    field->remove_plant(i, j);
-                  }
-                  break;
-                } else if (plantID != ID && i == field->get_sizeM() &&
-                           j == field->get_sizeN()) {
-                  cout << "Plant not found on the field" << endl;
+                plantID = matrix[i][j]->getID();
+              }
+              if (plantID == ID) {
+                cout << "Plant in position " << i << "," << j
+                     << " was harvested" << endl;
+                int yield = matrix[i][j]->plantHarvest();
+                if (matrix[i][j]->getName() == "wheat" ||
+                    matrix[i][j]->getName() == "Wheat") {
+                  inv->changeWheat(yield);
+                } else if (matrix[i][j]->getName() == "rice" ||
+                           matrix[i][j]->getName() == "Rice") {
+                  inv->changeRice(yield);
+                } else if (matrix[i][j]->getName() == "rye" ||
+                           matrix[i][j]->getName() == "Rye") {
+                  inv->changeRye(yield);
+                } else if (matrix[i][j]->getName() == "apple" ||
+                           matrix[i][j]->getName() == "Apple") {
+                  inv->changeApple(yield);
+                } else if (matrix[i][j]->getName() == "pear" ||
+                           matrix[i][j]->getName() == "Pear") {
+                  inv->changePear(yield);
+                } else if (matrix[i][j]->getName() == "banana" ||
+                           matrix[i][j]->getName() == "Banana") {
+                  inv->changeBanana(yield);
                 }
+                cout << "Plant in position " << i << "," << j
+                     << " was removed from field" << endl;
+                field->remove_plant(i, j);
+                found = true;
+                break;
               }
             }
+          }
+          if (found == false) {
+            cout << "Plant not found on the field" << endl;
           }
         } else {
           cout << "Nothing to remove, Field is empty" << endl;
         }
         break;
 
+      case 'w':
+      case 'W':
+        if (field->Empty() == false) {
+          bool found = false;
+          cout << "Enter the ID of the Plant you want to water, or enter 0 to "
+                  "water all:"
+               << endl;
+          while (true) {
+            if (std::cin >> ID) {
+              break;
+            } else {
+              std::cin.clear();
+              std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                              '\n');
+              std::cout << "Invalid input. Please enter an integer."
+                        << std::endl;
+            }
+          }
+          if (ID != 0) {
+            for (i = 0; i < field->get_sizeM(); i++) {
+              for (j = 0; j < field->get_sizeN(); j++) {
+                int plantID = -1;
+                if (matrix[i][j] != nullptr) {
+                  plantID = matrix[i][j]->getID();
+                }
+                if (plantID == ID) {
+                  matrix[i][j]->plantWater();
+                  cout << "Plant in position " << i << "," << j
+                       << " was watered." << endl;
+                  found = true;
+                }
+              }
+            }
+            if (found == false) {
+              cout << "Plant not found on the field" << endl;
+            }
+          } else {
+            for (i = 0; i < field->get_sizeM(); i++) {
+              for (j = 0; j < field->get_sizeN(); j++) {
+                if (matrix[i][j] != nullptr) {
+                  matrix[i][j]->plantWater();
+                  cout << "Plant in position " << i << "," << j
+                       << " was watered." << endl;
+                }
+              }
+            }
+          }
+        } else {
+          cout << "Nothing to water, Field is empty" << endl;
+        }
+        break;
       case 'g':
       case 'G':
         field->getContents();

@@ -13,8 +13,8 @@ using namespace std;
 
 // contructor, sets the ID used variable as 5, open as false, and exists as true
 Shop::Shop() {
-  IDused = 5;
-  eIDused = 5;
+  IDused = 4;
+  eIDused = 2;
   isOpen = false;
   exists = true;
   nameList = {"Wheat", "Rice", "Rye", "Apple", "Pear", "Banana"};

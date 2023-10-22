@@ -17,8 +17,8 @@ Grain::Grain(int ID, string name, int life, int setyield)
   yield = setyield;
 }
 
-// the destructor prints out a message detailing the deletion
-Grain::~Grain() { cout << name << " with ID " << ID << " was deleted" << endl; }
+// destructor
+Grain::~Grain() {}
 
 // the plantGrow function has multiple parts to manage the growth of the plant.
 // Nothing at all will occur if the pant is not alive or does not exist
@@ -79,12 +79,17 @@ int Grain::plantHarvest() {
     if (status != "growing") {
       cout << " A Yield of " << yield << " " << name << " was received."
            << endl;
+      status = "dead";
       return yield;
+    } else {
+      cout << "A Yield of 0 " << name << " was received." << endl;
+      status = "dead";
+      return 0;
     }
     status = "dead";
   } else {
+    cout << "No " << name << " received, plant is dead." << endl;
   }
-  cout << "No " << name << " received, plant is dead." << endl;
   return 0;
 }
 
@@ -110,7 +115,14 @@ void Grain::plantWater() {
 void Grain::getStatus() {
   cout << "Plant of type Grain, species " << name << " with ID " << ID
        << ". Age is " << age << " out of " << lifespan << " lifespan. Yield is "
-       << yield << "."
-       << " Current status: " << status << ", with growth rate " << growthRate
-       << " and " << water << "% water." << endl;
+       << yield << " once mature.";
+  if (isPlanted == false) {
+    cout << endl;
+  } else if (isPlanted == true) {
+    cout << " Current status: " << status << ", with growth rate " << growthRate
+         << " and " << water << "% water." << endl;
+  }
 }
+
+// sets the isPlanted value to be true, so status will print out growth state
+void Grain::planted() { isPlanted = true; }

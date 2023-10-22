@@ -21,5 +21,6 @@ class Fruit : public Plant {
   int plantHarvest() override;
   void plantWater() override;
   void getStatus() override;
+  void planted() override;
 };
 #endif

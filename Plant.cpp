@@ -13,6 +13,7 @@ Plant::Plant() : Item() {
   age = 0;
   water = 0;
   growthRate = 0;
+  isPlanted = false;
 }
 
 // Standard contructor feeds some values to the Item contructor, including a
@@ -23,6 +24,7 @@ Plant::Plant(int ID, string name, int life) : Item(ID, name, "growing", life) {
   age = 0;
   water = 100;
   growthRate = 1;
+  isPlanted = false;
 }
 
 // sets the growth rate of the plant using the input
@@ -36,4 +38,5 @@ void Plant::plantGrow(int growthRate) {}
 int Plant::plantHarvest() { return 0; }
 void Plant::plantWater() {}
 void Plant::getStatus() {}
+void Plant::planted() {}
 Plant::~Plant() {}
