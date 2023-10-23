@@ -64,7 +64,10 @@ Inventory::Inventory(int p, int e) {
 
 void Inventory::getContents() {
   if (isOpen == true && exists == true) {
-    cout << endl << "Tradeable goods: " << endl << endl;
+    cout << "Inventory Contains:" << endl
+         << endl
+         << "Tradeable goods: " << endl
+         << endl;
     cout << "Current Funds: " << getFunds() << "." << endl;
     cout << "Current Wheat: " << getWheat() << "." << endl;
     cout << "Current Rice: " << getRice() << "." << endl;
