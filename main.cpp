@@ -24,7 +24,7 @@ WINDOW *dispCreateField(Field &field){
     int windowY = field.get_sizeM() + 2;
     int windowX = (3 * (field.get_sizeN())) + 4;
 
-    windowField = newwin(windowY, windowX, (getmaxy(stdscr) - windowY) / 2, (getmaxx(stdscr) - windowX) / 2);
+    windowField = newwin(windowY, windowX, (getmaxy(stdscr) - windowY) / 2, (getmaxx(stdscr) / 2) - windowX);
 
     refresh();
 
@@ -146,7 +146,7 @@ int main() {
 
     fieldWindow = dispCreateField(field);
 
-    const char *menuChoices[] = {"Choice 1", "Choice 2", "Choice 3", "Choice 4", "Exit"};
+    const char *menuChoices[] = {"Field", "Inventory", "Shop", "Pass Time", "Exit"};
     int itemCount = sizeof(menuChoices) / sizeof(menuChoices[0]);
     ITEM **menuItems = (ITEM **)calloc(itemCount + 1, sizeof(ITEM *));
 
@@ -158,11 +158,11 @@ int main() {
     WINDOW *menuWindow;
 
     menu = new_menu(menuItems);
-    menuWindow = newwin(10, 50, 0, 0);
+    menuWindow = newwin(itemCount + 2, 25, (getmaxy(stdscr) - (itemCount + 2)) / 2, getmaxx(stdscr) / 2);
     keypad(menuWindow, true);
 
     set_menu_win(menu, menuWindow);
-    set_menu_sub(menu, derwin(menuWindow, 8, 40, 1, 1));
+    set_menu_sub(menu, derwin(menuWindow, itemCount, 23, 1, 1));
 
     box(menuWindow, 0, 0);
 
@@ -170,20 +170,25 @@ int main() {
 
     wrefresh(menuWindow);
 
-    getch();
-
     int c;
 
-    while ((c = wgetch(menuWindow)) != KEY_BACKSPACE) {
-        switch (c) {
-        case KEY_DOWN:
-            menu_driver(menu, REQ_DOWN_ITEM);
-            break;
-        case KEY_UP:
-            menu_driver(menu, REQ_UP_ITEM);
-            break;
+    bool running = true;
+
+    while (running == true){
+        while ((c = wgetch(menuWindow)) != KEY_BACKSPACE) {
+            switch (c) {
+                case KEY_DOWN:
+                    menu_driver(menu, REQ_DOWN_ITEM);
+                    break;
+                case KEY_UP:
+                    menu_driver(menu, REQ_UP_ITEM);
+                    break;
+                case 10: /* Enter Key */
+
+                    break;
+            }
+            wrefresh(menuWindow);
         }
-        wrefresh(menuWindow);
     }
 
     unpost_menu(menu);

@@ -5,3 +5,7 @@ fieldTest: fieldTest.cpp Field.cpp Plant.cpp Grain.cpp Item.cpp
 main: main.cpp Equipment.cpp Field.cpp Fruit.cpp Grain.cpp Inventory.cpp Item.cpp Plant.cpp Player.cpp Shop.cpp
 	g++ main.cpp Equipment.cpp Field.cpp Fruit.cpp Grain.cpp Inventory.cpp Item.cpp Plant.cpp Player.cpp Shop.cpp -lmenu -lncurses -o main
 	./main
+
+final: final.cpp Equipment.cpp Field.cpp Fruit.cpp Grain.cpp Inventory.cpp Item.cpp Plant.cpp Player.cpp Shop.cpp
+	@g++ final.cpp Equipment.cpp Field.cpp Fruit.cpp Grain.cpp Inventory.cpp Item.cpp Plant.cpp Player.cpp Shop.cpp -o final
+	@./final
